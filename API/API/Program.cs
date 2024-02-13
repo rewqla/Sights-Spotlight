@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StoreDAL.Data;
 using StoreDAL.Entities;
 
@@ -41,5 +42,19 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+var scope = app.Services.CreateScope(); 
+var serviceProvider = scope.ServiceProvider;
+var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+
+try
+{
+    await SeederDB.SeedData(serviceProvider);
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "A problem occurred during migration");
+}
 
 app.Run();
