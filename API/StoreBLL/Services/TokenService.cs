@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using StoreBLL.Interfaces;
 using StoreDAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StoreBLL.Services
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _config;
