@@ -52,6 +52,9 @@ namespace StoreDAL.Data
                 await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin" });
             }
 
+            if (context.Countries.Any())
+                return;
+
             var countries = new List<Country>
             {
                 new Country
