@@ -8,13 +8,17 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Data\" />
     <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StoreBLL\StoreBLL.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
