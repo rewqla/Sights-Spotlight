@@ -21,7 +21,7 @@ namespace API.Controllers
             _tokenService = tokenService;
         }
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> RegisterUser(RegisterDto registerDto)
         {
             var user = new User
             {
@@ -45,7 +45,13 @@ namespace API.Controllers
 
             await _userManager.AddToRoleAsync(user, "Member");
 
-            return StatusCode(201);
+            var createdUser = await _userManager.FindByNameAsync(registerDto.Username);
+
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = await _tokenService.GenerateToken(createdUser),
+            };
         }
 
         [HttpPost("login")]
