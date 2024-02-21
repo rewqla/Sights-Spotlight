@@ -20,6 +20,33 @@ const Register = () => {
     }));
   };
 
+  const handleApiErrors = (errors: any) => {
+    console.log(errors);
+    if (errors.response.data.errors) {
+      const modelStateErrors: string[] = [];
+
+      for (const key in errors.response.data.errors) {
+        if (errors.response.data.errors) {
+          modelStateErrors.push(errors.response.data.errors[key]);
+        }
+      }
+
+      modelStateErrors.forEach((error: string) => {
+        const firstError = error[0];
+
+        if (firstError.includes("Passwords")) {
+          console.log("password", { message: firstError });
+        } else if (firstError.includes("Email")) {
+          console.log("email", { message: firstError });
+        } else if (firstError.includes("FirstName")) {
+          console.log("username", { message: firstError });
+        } else if (firstError.includes("LastName")) {
+          console.log("lastName", { message: firstError });
+        }
+      });
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -32,6 +59,7 @@ const Register = () => {
       console.log("Your token", response.token);
     } catch (error) {
       console.error("Registration failed!", error);
+      handleApiErrors(error);
     }
   };
 
