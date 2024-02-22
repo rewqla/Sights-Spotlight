@@ -21,7 +21,6 @@ const Register = () => {
   };
 
   const handleApiErrors = (errors: any) => {
-    console.log(errors);
     if (errors.response.data.errors) {
       const modelStateErrors: string[] = [];
 
