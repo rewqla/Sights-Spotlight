@@ -19,5 +19,7 @@ namespace StoreDAL.Data
         }
 
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Sight> Sights { get; set; }
+        public DbSet<SightPhoto> SightPhotos { get; set; }
     }
 }

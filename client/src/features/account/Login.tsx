@@ -28,6 +28,7 @@ const Login = () => {
       console.log("Your token", response.token);
     } catch (error) {
       console.error("Login failed!", error);
+      console.error("Wrong username or password!", error);
     }
   };
 

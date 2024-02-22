@@ -98,6 +98,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseStaticFiles();
 
 var scope = app.Services.CreateScope(); 
 var serviceProvider = scope.ServiceProvider;
