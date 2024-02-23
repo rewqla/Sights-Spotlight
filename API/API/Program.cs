@@ -8,6 +8,8 @@ using StoreBLL.Interfaces;
 using StoreBLL.Services;
 using StoreDAL.Data;
 using StoreDAL.Entities;
+using StoreDAL.Interfaces;
+using StoreDAL.Repository;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,6 +77,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
