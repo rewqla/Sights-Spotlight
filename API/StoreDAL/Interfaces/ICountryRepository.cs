@@ -10,5 +10,7 @@ namespace StoreDAL.Interfaces
 {
     public interface ICountryRepository : IGenericRepository<Country>
     {
+        Task<IEnumerable<Country>> GetAllCountries();
+        Task<Country> GetCountryById(int id);
     }
 }
