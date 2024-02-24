@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreBLL.DTO;
 using StoreBLL.Interfaces;
+using StoreBLL.Services;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 
@@ -11,21 +12,23 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class CountryController : ControllerBase
     {
-        private readonly ICountryRepository _countryRepository;
-        public CountryController(ICountryRepository countryRepository)
+        private readonly ICountryService _countryService;
+        public CountryController(ICountryService countryService)
         {
-            _countryRepository = countryRepository;
+            _countryService = countryService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
-            var countries = await _countryRepository.GetAllCountries();
+            var countries = await _countryService.GetCountries();
+
             return Ok(countries);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountryById(int id)
+        public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id)
         {
-            var country = await _countryRepository.GetCountryById(id);
+            var country = await _countryService.GetCountryDetails(id);
+
             return Ok(country);
         }
     }

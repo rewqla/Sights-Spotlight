@@ -85,6 +85,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
 
 var app = builder.Build();
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreBLL.DTO
 {
-    public class CountryInfoDto : CountryDto
+    public class CountryDetailsDto : CountryDto
     {
         public string Description { get; set; }
         public List<CountrySightDto> CountrySightDtos { get; set; }
