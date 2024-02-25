@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoreBLL.Interfaces;
+using StoreBLL.Mappers;
 using StoreBLL.Services;
 using StoreDAL.Data;
 using StoreDAL.Entities;
@@ -15,6 +14,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -86,6 +86,7 @@ builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
+
 
 var app = builder.Build();
 

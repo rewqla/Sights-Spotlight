@@ -1,32 +1,33 @@
-﻿using StoreBLL.DTO;
+﻿using AutoMapper;
+using StoreBLL.DTO;
 using StoreBLL.Interfaces;
+using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace StoreBLL.Services
 {
     public class CountryService : ICountryService
     {
         private readonly ICountryRepository _countryRepository;
-        public CountryService(ICountryRepository countryRepository)
+        private readonly IMapper _mapper;
+        public CountryService(ICountryRepository countryRepository, IMapper mapper)
         {
             _countryRepository = countryRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<CountryDto>> GetCountries()
         {
             var countries = await _countryRepository.GetAll();
 
-            return countries.Select(c => new CountryDto
-            {
-                Id = c.Id,
-                Name = c.Name,
-                ImgaeURL = c.MainImgaeURL
-            });
+            return _mapper.Map<IEnumerable<CountryDto>>(countries);
         }
 
         public async Task<CountryDetailsDto> GetCountryDetails(int id)
@@ -36,22 +37,7 @@ namespace StoreBLL.Services
             if (country == null)
                 return null;
 
-            var countryDto = new CountryDetailsDto
-            {
-                Id = country.Id,
-                Name = country.Name,
-                ImgaeURL = country.SecondaryImageURL,
-                Description = country.Description,
-                CountrySightDtos = country.Sights.Select(s => new CountrySightDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Description = s.Description,
-                    ImageURLs = s.SightPhotos.Select(p => p.Url).ToList()
-                }).ToList()
-            };
-
-            return countryDto;
+            return _mapper.Map<CountryDetailsDto>(country);
         }
     }
 }
