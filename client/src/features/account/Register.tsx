@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import agent from "../../app/api/agent";
 import Account from "../../app/api/agent";
 import "./Account.css";
 
@@ -52,7 +53,7 @@ const Register = () => {
     try {
       console.log(registerData);
 
-      const response = await Account.register(registerData);
+      const response = await agent.Account.register(registerData);
 
       console.log("Registration successful!", response);
       console.log("Your token", response.token);

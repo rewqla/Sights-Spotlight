@@ -1,0 +1,17 @@
+.countries-container {
+  padding: 20px;
+}
+
+.countries-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.countries-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.country-item {
+  margin-bottom: 5px;
+}

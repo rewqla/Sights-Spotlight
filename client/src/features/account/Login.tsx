@@ -1,4 +1,5 @@
 import { useState } from "react";
+import agent from "../../app/api/agent";
 import Account from "../../app/api/agent";
 import "./Account.css";
 
@@ -22,7 +23,7 @@ const Login = () => {
     try {
       console.log(loginData);
 
-      const response = await Account.login(loginData);
+      const response = await agent.Account.login(loginData);
 
       console.log("Login successful!", response);
       console.log("Your token", response.token);

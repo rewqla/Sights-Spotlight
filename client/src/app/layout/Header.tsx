@@ -36,6 +36,14 @@ const Header = () => {
               Login
             </Link>
           </li>
+          <li style={{ marginRight: "20px" }}>
+            <Link
+              to="/countries"
+              style={{ color: "white", textDecoration: "none" }}
+            >
+              Counties
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

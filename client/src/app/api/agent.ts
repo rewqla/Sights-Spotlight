@@ -13,4 +13,14 @@ const Account = {
   },
 };
 
-export default Account;
+const Country = {
+  countries: () =>
+    axios.get("country/countries").then((response) => response.data),
+};
+
+const agent = {
+  Account,
+  Country,
+};
+
+export default agent;

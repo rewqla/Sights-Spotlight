@@ -17,7 +17,7 @@ namespace API.Controllers
         {
             _countryService = countryService;
         }
-        [HttpGet]
+        [HttpGet("countries")]
         public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
             var countries = await _countryService.GetCountries();
