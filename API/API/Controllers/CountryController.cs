@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using API.Routes;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StoreBLL.DTO;
 using StoreBLL.Interfaces;
@@ -9,7 +10,6 @@ using StoreDAL.Interfaces;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     public class CountryController : ControllerBase
     {
         private readonly ICountryService _countryService;
@@ -17,14 +17,16 @@ namespace API.Controllers
         {
             _countryService = countryService;
         }
-        [HttpGet("countries")]
+
+        [HttpGet(CountryRoutes.GetAll)]
         public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
         {
             var countries = await _countryService.GetCountries();
 
             return Ok(countries);
         }
-        [HttpGet("{id}")]
+
+        [HttpGet(CountryRoutes.GetById)]
         public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id)
         {
             var country = await _countryService.GetCountryDetails(id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using API.Routes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,6 @@ using StoreDAL.Entities;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -20,7 +20,8 @@ namespace API.Controllers
             _userManager = userManager;
             _tokenService = tokenService;
         }
-        [HttpPost("register")]
+
+        [HttpPost(AccountRoutes.Register)]
         public async Task<ActionResult<UserDto>> RegisterUser(RegisterDto registerDto)
         {
             var user = new User
@@ -54,7 +55,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpPost("login")]
+        [HttpPost(AccountRoutes.Login)]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByNameAsync(loginDto.Username);
@@ -69,8 +70,9 @@ namespace API.Controllers
             };
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("currentUser")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize]
+        [HttpGet(AccountRoutes.CurrentUser)]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
