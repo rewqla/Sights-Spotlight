@@ -104,7 +104,7 @@ namespace StoreDAL.Data
                     Description = "Located on the Balkan Peninsula, Greece is considered the cradle of ancient Greek civilization and democracy. It is noteworthy for its ancient monuments, such as the " +
                     "Acropolis in Athens, the Epidaurus Theater and the Temple of Olympia. The country is considered to be the cradle of ancient Greek mythology and philosophy, with prominent philosophers " +
                     "such as Socrates, Plato and Aristotle. Greek islands such as Crete, Santorini, and Mykonos are famous for their crystal water, traditional architecture, and sunny climate.",
-                    MainImgaeURL = "images/27648e5b7bc2c3ebcad4e19cb8de16c8.jpeg",
+                    MainImgaeURL = "images/27648e5b7bc2c3ebcad4e19cb8de16c8.jpg",
                     SecondaryImageURL = "images/e00fa62d1f1c5a3042fa6744c321ff02.png",
                 },
 
@@ -115,7 +115,7 @@ namespace StoreDAL.Data
                     "witnessed great historical events, including the cre the Kingdom of Poland and its entry into the United Kingdom with Lithuania. Poland's castles and fortre such as Wawel in " +
                     "Krakow and Malbork in the northwest, bear witness to the greatness of bygone eras. In modern times, Poland is moving to the forefront of economic development and innovation, " +
                     "becoming an important player in the European Union. Poland's natural beauty encompasses the Carpathian Mount in the southwest, Masuria in the northeast, and the Baltic Sea coast in the north.",
-                    MainImgaeURL = "images/84c05622078e18f717d0a37fea146e22.jpeg",
+                    MainImgaeURL = "images/84c05622078e18f717d0a37fea146e22.jpg",
                     SecondaryImageURL = "images/48d43817407ce4ab59051650d6597565.png",
                 },
             };

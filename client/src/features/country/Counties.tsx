@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import agent from "../../app/api/agent";
 import { Country } from "../../app/models/Country";
 import "./Countries.css";
+import CountryCard from "./CountryCard";
 
 const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -21,14 +23,12 @@ const Countries = () => {
 
   return (
     <div className="countries-container">
-      <h1 className="countries-title">Countries</h1>{" "}
-      <ul className="countries-list">
+      <h1 className="countries-title">Countries</h1>
+      <div className="countries-list">
         {countries.map((country) => (
-          <li key={country.id} className="country-item">
-            {country.name}
-          </li>
+          <CountryCard key={country.id} country={country} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
