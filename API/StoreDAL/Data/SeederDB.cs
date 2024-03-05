@@ -73,7 +73,7 @@ namespace StoreDAL.Data
                     " which includes tea drinking, ikebana (flower art), garden art and traditional noh theater. Japan is also famous for its innovations and technological achievements in" +
                     " the fields of automotive, electronics and robotics. The country has impressive natural beauty spots such as the Fuji Mountains and traditional spa resorts. Japan is a " +
                     "country with a rich history, unique traditions and a modern society.",
-                    MainImgaeURL = "images/0883e295a40b9d76d22ca219c40328ef.jpeg",
+                    MainImgaeURL = "images/0883e295a40b9d76d22ca219c40328ef.jpg",
                     SecondaryImageURL = "images/8eb35089104da5451605e8a0e26e3617.jpg",
                 },
 
@@ -84,7 +84,7 @@ namespace StoreDAL.Data
                     "such as the State Art Gallery in Dresden and the Museum der Ischluss in Munich. The literary heritage of Goethe and Schiller, theater performances in Bayreuth, and music " +
                     "festivals such as the Bayreuth Opera Festival define the German cultural scene. Historical landmarks such as Cologne Cathedral and Neuschwanstein Castle add to the country's " +
                     "unique character.",
-                    MainImgaeURL = "images/image_processing20220209-4-14s88lt.jpeg",
+                    MainImgaeURL = "images/image_processing20220209-4-14s88lt.jpg",
                     SecondaryImageURL = "images/545c0345ecff036d6780ba816674b5d1.png",
                 },
 
@@ -94,7 +94,7 @@ namespace StoreDAL.Data
                     Description = "A country with a rich history, from the Roman Empire to the Renaissance. Rome, as the capita is marked by ancient monuments. The culmination of art, architecture" +
                     " and cuisine. Recognized for its museums, opera and wine.Located on the Apennine Peninsula, with many outstanding natural places, including the Amalfi Coast and lakes. The world" +
                     " center of fashion and design.Cities such as Milan are famous for their shopping streets and prominent fashion events.",
-                    MainImgaeURL = "images/d5ac9adb3358e6baddd6de118750adec.jpeg",
+                    MainImgaeURL = "images/d5ac9adb3358e6baddd6de118750adec.jpg",
                     SecondaryImageURL = "images/2c490ac47e2d3ed9a95b6d499fb51767.png",
                 },
 

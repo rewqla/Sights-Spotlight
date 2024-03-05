@@ -14,7 +14,9 @@ const CountryCard = ({ country }: Props) => {
       <img src={imageUrl} alt={country.name} className="country-image" />
       <div className="country-details">
         <h3>{country.name}</h3>
-        <button className="explore-button">Explore country</button>
+        <Link to={`/countries/${country.id}`}>
+          <button className="explore-button">Explore country</button>
+        </Link>
       </div>
     </div>
   );

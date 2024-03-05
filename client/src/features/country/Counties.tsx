@@ -12,7 +12,6 @@ const Countries = () => {
     const fetchCountries = async () => {
       try {
         const response = await agent.Country.countries();
-
         setCountries(response);
       } catch (error) {
         console.error(error);
