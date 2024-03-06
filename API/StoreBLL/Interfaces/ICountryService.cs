@@ -9,7 +9,7 @@ namespace StoreBLL.Interfaces
 {
     public interface ICountryService
     {
-        Task<IEnumerable<CountryDto>> GetCountries();
-        Task<CountryDetailsDto> GetCountryDetails(int id);
+        Task<IEnumerable<CountryDto>> GetAllCountries();
+        Task<CountryDetailsDto> GetCountryDetailsById(int id);
     }
 }
