@@ -4,7 +4,7 @@
     {
         private const string BaseRoute = "api/country";
 
-        public const string GetAll = $"{BaseRoute}/countries";
+        public const string GetAll = $"{BaseRoute}/";
         public const string GetById = $"{BaseRoute}/{{id}}";
     }
 }
