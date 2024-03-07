@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
+using SightsSpotlight.Test.IntegrationTests;
 using StoreBLL.DTO;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,17 @@ using System.Threading.Tasks;
 
 namespace SightsSpotlight.Test.Api.Test
 {
-    public class CountryControllerTest
+    public class CountryIntegrationTest
     {
+        private CustomWebApplicationFactory _factory;
         private HttpClient _httpClient;
         private const string RequestUri = "api/country/";
 
         [SetUp]
         public void Setup()
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7188/");
+            _factory = new CustomWebApplicationFactory();
+            _httpClient = _factory.CreateClient();
         }
 
         [Test]
@@ -53,7 +55,7 @@ namespace SightsSpotlight.Test.Api.Test
         }
 
         [Test]
-        public async Task CountryController_GetCountryById_ReturnsBadRequest()
+        public async Task CountryController_GetCountryById_ReturnsNotFound()
         {
             //arrange
             var countryId = 1099;
@@ -62,7 +64,6 @@ namespace SightsSpotlight.Test.Api.Test
             var httpResponse = await _httpClient.GetAsync(RequestUri + countryId);
 
             // assert
-            httpResponse.EnsureSuccessStatusCode();
 
             Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
