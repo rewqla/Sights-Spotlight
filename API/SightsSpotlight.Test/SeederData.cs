@@ -44,27 +44,72 @@ namespace SightsSpotlight.Test
                     " center of fashion and design.Cities such as Milan are famous for their shopping streets and prominent fashion events.",
                     MainImgaeURL = "images/d5ac9adb3358e6baddd6de118750adec.jpg",
                     SecondaryImageURL = "images/2c490ac47e2d3ed9a95b6d499fb51767.png",
-                },
+                }
+            );
 
-                new Country
+            context.Sights.AddRange(
+                new Sight
                 {
-                    Name = "Greece",
-                    Description = "Located on the Balkan Peninsula, Greece is considered the cradle of ancient Greek civilization and democracy. It is noteworthy for its ancient monuments, such as the " +
-                    "Acropolis in Athens, the Epidaurus Theater and the Temple of Olympia. The country is considered to be the cradle of ancient Greek mythology and philosophy, with prominent philosophers " +
-                    "such as Socrates, Plato and Aristotle. Greek islands such as Crete, Santorini, and Mykonos are famous for their crystal water, traditional architecture, and sunny climate.",
-                    MainImgaeURL = "images/27648e5b7bc2c3ebcad4e19cb8de16c8.jpg",
-                    SecondaryImageURL = "images/e00fa62d1f1c5a3042fa6744c321ff02.png",
+                    Name = "Coliseum",
+                    Description = "A symbol of the Roman Empire and an architectural masterpiece built in the 1st century AD for gladiatorial games and various events. The oval arena could " +
+                    "accommodate more than 50 thousand spectators and has four floors of colonnades decorated with Doric, Ionic and Corinthian porticoes. ",
+                    CountryId = 3,
+                    SightPhotos = new List<SightPhoto>
+                      {
+                          new SightPhoto
+                          {
+                              Url = "images/3de1707f01fa3507f8e0dfb454b95266.png",
+                          }
+                      },
                 },
-
-                new Country
+                new Sight
                 {
-                    Name = "Poland",
-                    Description = "Located in the center of Europe, Poland has a rich cultural and historical past, the influence of which is e in its architecture, traditions and cuisine. Poland has " +
-                    "witnessed great historical events, including the cre the Kingdom of Poland and its entry into the United Kingdom with Lithuania. Poland's castles and fortre such as Wawel in " +
-                    "Krakow and Malbork in the northwest, bear witness to the greatness of bygone eras. In modern times, Poland is moving to the forefront of economic development and innovation, " +
-                    "becoming an important player in the European Union. Poland's natural beauty encompasses the Carpathian Mount in the southwest, Masuria in the northeast, and the Baltic Sea coast in the north.",
-                    MainImgaeURL = "images/84c05622078e18f717d0a37fea146e22.jpg",
-                    SecondaryImageURL = "images/48d43817407ce4ab59051650d6597565.png",
+                    Name = "Heidelberg",
+                    Description = "It was built in the Gothic style and impresses with its grandeur and detailed architectural forms. It is defined by a huge dome designed by Brunelleschi. " +
+                    "The interior decoration includes works by such masters as Giotto, Vasari and Zuccari. Masterpieces of painting and sculpture adorn the chapels and canopies.",
+                    CountryId = 3,
+                    SightPhotos = new List<SightPhoto>
+                    {
+                        new SightPhoto
+                        {
+                            Url = "images/20b8d660c4ce42b62f4ec9f5ded96a2f.png",
+                        },
+                        new SightPhoto
+                        {
+                            Url = "images/4b88dbabfe71e1a1f649d92819a5742e.png",
+                        },
+                        new SightPhoto
+                        {
+                            Url = "images/55140bbaea8ab21aa13de4ef4d090e73.png",
+                        },
+                    },
+                },
+                new Sight
+                {
+                    Name = "Venice",
+                    Description = "Located on the lagoon of the Adriatic Sea, Venice is famous for its architecture and the system of canals that serve as streets.Many bridges, including " +
+                    "the prominent Rialto and Accademia bridges, connect the picturesque streets, and the canals serve as the main arteries of the city.Preserving traces of its majestic " +
+                    "past, Venice was the cradleof the republic and a huge trading center in the Middle Ages.",
+                    CountryId = 3,
+                    SightPhotos = new List<SightPhoto>
+                    {
+                        new SightPhoto
+                        {
+                            Url = "images/b0f14fcdf76edffca2215258b0d7b30c.png",
+                        },
+                        new SightPhoto
+                        {
+                            Url = "images/3816533f9b96f639821e66ffe668705e.png",
+                        },
+                        new SightPhoto
+                        {
+                            Url = "images/27f6ab3532ba84f59d0795aadda2d3ef.png",
+                        },
+                        new SightPhoto
+                        {
+                            Url = "images/0123cd07f5ed2816b49904cceb4cbeba.png",
+                        },
+                    },
                 }
             );
 
