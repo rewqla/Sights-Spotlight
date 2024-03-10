@@ -1,0 +1,29 @@
+.country-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.country-image {
+  max-width: 400px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.country-details {
+  margin-top: 10px;
+}
+
+.explore-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.explore-button:hover {
+  background-color: #0056b3;
+}

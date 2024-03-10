@@ -11,5 +11,8 @@ namespace StoreDAL.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string MainImgaeURL { get; set; }
+        public string SecondaryImageURL { get; set; }
+        public IList<Sight> Sights { get; set; }
     }
 }

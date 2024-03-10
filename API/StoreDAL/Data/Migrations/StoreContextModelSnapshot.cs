@@ -137,7 +137,15 @@ namespace StoreDAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MainImgaeURL")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SecondaryImageURL")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -173,6 +181,54 @@ namespace StoreDAL.Data.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("StoreDAL.Entities.Sight", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Sights");
+                });
+
+            modelBuilder.Entity("StoreDAL.Entities.SightPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SightId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SightId");
+
+                    b.ToTable("SightPhotos");
                 });
 
             modelBuilder.Entity("StoreDAL.Entities.User", b =>
@@ -299,6 +355,38 @@ namespace StoreDAL.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StoreDAL.Entities.Sight", b =>
+                {
+                    b.HasOne("StoreDAL.Entities.Country", "Country")
+                        .WithMany("Sights")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("StoreDAL.Entities.SightPhoto", b =>
+                {
+                    b.HasOne("StoreDAL.Entities.Sight", "Sight")
+                        .WithMany("SightPhotos")
+                        .HasForeignKey("SightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sight");
+                });
+
+            modelBuilder.Entity("StoreDAL.Entities.Country", b =>
+                {
+                    b.Navigation("Sights");
+                });
+
+            modelBuilder.Entity("StoreDAL.Entities.Sight", b =>
+                {
+                    b.Navigation("SightPhotos");
                 });
 #pragma warning restore 612, 618
         }
