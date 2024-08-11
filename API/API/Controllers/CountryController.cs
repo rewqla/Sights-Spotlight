@@ -35,5 +35,18 @@ namespace API.Controllers
 
             return Ok(country);
         }
+
+        [HttpPost(CountryRoutes.Create)]
+        public async Task<ActionResult> CreateCountry([FromBody] CountryCreateDto countryCreateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int createdCounryId=await _countryService.CreateCountry(countryCreateDto);
+
+            return Ok(createdCounryId);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace StoreBLL.Interfaces
     {
         Task<IEnumerable<CountryDto>> GetAllCountries();
         Task<CountryDetailsDto> GetCountryDetailsById(int id);
+        Task<int> CreateCountry(CountryCreateDto countryCreateDto);
     }
 }

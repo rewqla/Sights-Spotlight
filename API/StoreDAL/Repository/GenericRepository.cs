@@ -30,7 +30,6 @@ namespace StoreDAL.Repository
         public async Task Add(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
-            await _context.AddAsync(entity);
         }
 
         public async Task Delete(int id)
@@ -47,7 +46,17 @@ namespace StoreDAL.Repository
         public async Task Update(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> Complete()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task Dispose()
+        {
+            await _context.DisposeAsync();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -13,5 +13,7 @@ namespace StoreDAL.Interfaces
         Task Add(TEntity entity);
         Task Delete(int id);
         Task Update(TEntity entity);
+        Task<int> Complete();
+        Task Dispose();
     }
 }

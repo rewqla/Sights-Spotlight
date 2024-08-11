@@ -6,5 +6,6 @@
 
         public const string GetAll = $"{BaseRoute}/";
         public const string GetById = $"{BaseRoute}/{{id}}";
+        public const string Create = $"{BaseRoute}/create";
     }
 }

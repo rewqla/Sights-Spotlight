@@ -36,5 +36,22 @@ namespace StoreBLL.Services
 
             return _mapper.Map<CountryDetailsDto>(country);
         }
+
+        public async Task<int> CreateCountry(CountryCreateDto countryCreateDto)
+        {
+            try
+            {
+                var country = _mapper.Map<Country>(countryCreateDto);
+
+                await _countryRepository.Add(country);
+                await _countryRepository.Complete();
+
+                return country.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("An error occurred while creating the country.", ex);
+            }
+        }
     }
 }
