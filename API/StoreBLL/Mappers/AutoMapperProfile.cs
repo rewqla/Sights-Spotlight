@@ -15,7 +15,7 @@ namespace StoreBLL.Mappers
         public AutoMapperProfile()
         {
             CreateMap<Country, CountryDto>()
-                .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.MainImgaeURL));
+                .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.MainImageURL));
 
             CreateMap<Country, CountryDetailsDto>()
                    .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.SecondaryImageURL))

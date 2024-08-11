@@ -121,10 +121,12 @@ namespace API
 
             var scope = app.ApplicationServices.CreateScope();
             var serviceProvider = scope.ServiceProvider;
+            var context = serviceProvider.GetRequiredService<StoreContext>();
 
             try
             {
-               await SeederDB.SeedData(serviceProvider); 
+                await context.Database.MigrateAsync();
+                await SeederDB.SeedData(serviceProvider); 
             }
             catch (Exception ex)
             {
