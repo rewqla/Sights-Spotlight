@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using API.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -76,6 +77,8 @@ namespace API
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
@@ -89,7 +92,18 @@ namespace API
                 };
             });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyRoles.Admin, policy =>
+                    policy.RequireClaim("role", "admin"));
+
+                options.AddPolicy(PolicyRoles.Member, policy =>
+                      policy.RequireClaim("role", "user"));
+
+                options.AddPolicy(PolicyRoles.Viewer, policy =>
+                      policy.RequireClaim("role", "member"));
+            });
+
 
             services.AddScoped<ICountryRepository, CountryRepository>();
 

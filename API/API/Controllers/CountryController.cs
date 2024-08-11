@@ -1,4 +1,6 @@
-﻿using API.Routes;
+﻿using API.Authorization;
+using API.Routes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreBLL.DTO;
 using StoreBLL.Interfaces;
@@ -24,6 +26,7 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetById)]
+        [Authorize(PolicyRoles.Admin)]
         public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id, CancellationToken cancellationToken)
         {
             var country = await _countryService.GetCountryDetailsById(id, cancellationToken);
