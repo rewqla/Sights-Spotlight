@@ -18,14 +18,15 @@ namespace StoreDAL.Repository
             _countryDbSet = context.Set<Country>();
         }
 
-        public async Task<IEnumerable<Country>> GetAllCountriesWithSights()
+        public async Task<IEnumerable<Country>> GetAllCountriesWithSights(CancellationToken cancellationToken = default)
         {
             return await _countryDbSet.Include(s => s.Sights).ThenInclude(sp => sp.SightPhotos).ToListAsync();
         }
 
-        public async Task<Country> GetCountryByIdWithSights(int id)
+        public async Task<Country> GetCountryByIdWithSights(int id, CancellationToken cancellationToken = default)
         {
-            return await _countryDbSet.Include(s => s.Sights).ThenInclude(sp => sp.SightPhotos).FirstOrDefaultAsync(x => x.Id == id);
+            return await _countryDbSet.Include(s => s.Sights)
+                .ThenInclude(sp => sp.SightPhotos).FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

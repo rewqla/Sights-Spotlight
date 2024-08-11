@@ -10,7 +10,7 @@ namespace StoreDAL.Interfaces
 {
     public interface ICountryRepository : IGenericRepository<Country>
     {
-        Task<IEnumerable<Country>> GetAllCountriesWithSights();
-        Task<Country> GetCountryByIdWithSights(int id);
+        Task<IEnumerable<Country>> GetAllCountriesWithSights(CancellationToken cancellationToken = default);
+        Task<Country> GetCountryByIdWithSights(int id, CancellationToken cancellationToken = default);
     }
 }

@@ -9,8 +9,8 @@ namespace StoreBLL.Interfaces
 {
     public interface ICountryService
     {
-        Task<IEnumerable<CountryDto>> GetAllCountries();
-        Task<CountryDetailsDto> GetCountryDetailsById(int id);
-        Task<int> CreateCountry(CountryCreateDto countryCreateDto);
+        Task<IEnumerable<CountryDto>> GetAllCountries(CancellationToken cancellationToken = default);
+        Task<CountryDetailsDto> GetCountryDetailsById(int id, CancellationToken cancellationToken = default);
+        Task<int> CreateCountry(CountryCreateDto countryCreateDto, CancellationToken cancellationToken = default);
     }
 }

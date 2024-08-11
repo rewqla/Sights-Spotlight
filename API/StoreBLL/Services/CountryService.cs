@@ -23,21 +23,21 @@ namespace StoreBLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CountryDto>> GetAllCountries()
+        public async Task<IEnumerable<CountryDto>> GetAllCountries(CancellationToken cancellationToken = default)
         {
             var countries = await _countryRepository.GetAll();
 
             return _mapper.Map<IEnumerable<CountryDto>>(countries);
         }
 
-        public async Task<CountryDetailsDto> GetCountryDetailsById(int id)
+        public async Task<CountryDetailsDto> GetCountryDetailsById(int id, CancellationToken cancellationToken = default)
         {
             var country = await _countryRepository.GetCountryByIdWithSights(id);
 
             return _mapper.Map<CountryDetailsDto>(country);
         }
 
-        public async Task<int> CreateCountry(CountryCreateDto countryCreateDto)
+        public async Task<int> CreateCountry(CountryCreateDto countryCreateDto, CancellationToken cancellationToken = default)
         {
             try
             {

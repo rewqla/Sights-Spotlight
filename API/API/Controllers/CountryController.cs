@@ -16,17 +16,17 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetAll)]
-        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries(CancellationToken cancellationToken)
         {
-            var countries = await _countryService.GetAllCountries();
+            var countries = await _countryService.GetAllCountries(cancellationToken);
 
             return Ok(countries);
         }
 
         [HttpGet(CountryRoutes.GetById)]
-        public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id)
+        public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id, CancellationToken cancellationToken)
         {
-            var country = await _countryService.GetCountryDetailsById(id);
+            var country = await _countryService.GetCountryDetailsById(id, cancellationToken);
 
             if (country == null)
             {
@@ -37,14 +37,14 @@ namespace API.Controllers
         }
 
         [HttpPost(CountryRoutes.Create)]
-        public async Task<ActionResult> CreateCountry([FromBody] CountryCreateDto countryCreateDto)
+        public async Task<ActionResult> CreateCountry([FromBody] CountryCreateDto countryCreateDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            int createdCounryId=await _countryService.CreateCountry(countryCreateDto);
+            int createdCounryId=await _countryService.CreateCountry(countryCreateDto, cancellationToken);
 
             return Ok(createdCounryId);
         }

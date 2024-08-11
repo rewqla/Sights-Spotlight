@@ -19,22 +19,22 @@ namespace StoreDAL.Repository
             _context = context;
             _dbSet = context.Set<TEntity>();
         }
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
-        public async Task<TEntity> FindById(int id)
+        public async Task<TEntity> FindById(int id, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id, cancellationToken);
         }
-        public async Task Add(TEntity entity)
+        public async Task Add(TEntity entity, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddAsync(entity);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(int id, CancellationToken cancellationToken = default)
         {
-            var entity = await _dbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id, cancellationToken);
 
             if (entity != null)
             {
@@ -43,7 +43,7 @@ namespace StoreDAL.Repository
             }
         }
 
-        public async Task Update(TEntity entity)
+        public void Update(TEntity entity, CancellationToken cancellationToken = default)
         {
             _context.Entry(entity).State = EntityState.Modified;
         }

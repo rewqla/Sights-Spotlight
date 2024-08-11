@@ -125,8 +125,8 @@ namespace API
 
             try
             {
-                await context.Database.MigrateAsync();
-                await SeederDB.SeedData(serviceProvider); 
+                await SeederDB.SeedData(serviceProvider);
+                //await context.Database.MigrateAsync();
             }
             catch (Exception ex)
             {
