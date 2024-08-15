@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using StoreBLL.DTO;
 using StoreBLL.Interfaces;
 using StoreDAL.Entities;
@@ -16,11 +17,13 @@ namespace StoreBLL.Services
     public class CountryService : ICountryService
     {
         private readonly ICountryRepository _countryRepository;
+        private readonly IValidator<Country> _countryValidator;
         private readonly IMapper _mapper;
-        public CountryService(ICountryRepository countryRepository, IMapper mapper)
+        public CountryService(ICountryRepository countryRepository, IMapper mapper, IValidator<Country> countryValidator)
         {
             _countryRepository = countryRepository;
             _mapper = mapper;
+            _countryValidator = countryValidator;
         }
 
         public async Task<IEnumerable<CountryDto>> GetAllCountries(CancellationToken cancellationToken = default)
@@ -42,6 +45,7 @@ namespace StoreBLL.Services
             try
             {
                 var country = _mapper.Map<Country>(countryCreateDto);
+                await _countryValidator.ValidateAndThrowAsync(country);
 
                 await _countryRepository.Add(country);
                 await _countryRepository.Complete();

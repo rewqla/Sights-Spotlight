@@ -26,7 +26,6 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetById)]
-        [Authorize(PolicyRoles.Admin)]
         public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id, CancellationToken cancellationToken)
         {
             var country = await _countryService.GetCountryDetailsById(id, cancellationToken);
@@ -40,6 +39,7 @@ namespace API.Controllers
         }
 
         [HttpPost(CountryRoutes.Create)]
+        //[Authorize(PolicyRoles.Admin)]
         public async Task<ActionResult> CreateCountry([FromBody] CountryCreateDto countryCreateDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -47,9 +47,13 @@ namespace API.Controllers
                 return BadRequest(ModelState);
             }
 
-            int createdCounryId=await _countryService.CreateCountry(countryCreateDto, cancellationToken);
+            int createdCounryId = await _countryService.CreateCountry(countryCreateDto, cancellationToken);
 
             return Ok(createdCounryId);
         }
     }
 }
+
+//update
+//Request reponse conract
+//advnced

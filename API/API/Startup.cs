@@ -1,10 +1,12 @@
 ﻿using API.Authorization;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoreBLL.Interfaces;
 using StoreBLL.Mappers;
+using StoreBLL.Middlewares;
 using StoreBLL.Services;
 using StoreDAL.Data;
 using StoreDAL.Entities;
@@ -104,11 +106,14 @@ namespace API
                       policy.RequireClaim("role", "member"));
             });
 
+            services.AddScoped<IValidator<Country>, CountryValidation>();
+
 
             services.AddScoped<ICountryRepository, CountryRepository>();
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICountryService, CountryService>();
+
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Program> logger)
@@ -147,6 +152,7 @@ namespace API
                 logger.LogError(ex, "A problem occurred during migration");
             }
 
+            app.UseMiddleware<ValidationMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
