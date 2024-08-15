@@ -23,7 +23,7 @@ public class CountryValidation : AbstractValidator<Country>
 
         RuleFor(x => x.Name)
             .MustAsync(ValidateName)
-            .WithMessage("The name must be greater than 3");
+            .WithMessage("Not unique");
 
         RuleFor(x => x.MainImageURL)
             .NotEmpty()

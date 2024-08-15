@@ -97,11 +97,11 @@ namespace API
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(PolicyRoles.Admin, policy =>
-                    policy.RequireClaim("role", "admin"));
+                    policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Admin));
                 options.AddPolicy(PolicyRoles.Member, policy =>
-                      policy.RequireClaim("role", "Member"));
+                      policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Member));
                 options.AddPolicy(PolicyRoles.Viewer, policy =>
-                      policy.RequireClaim("role", "viewer"));
+                      policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Viewer));
             });
 
             services.AddScoped<IValidator<Country>, CountryValidation>();

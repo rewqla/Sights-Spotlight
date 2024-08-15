@@ -7,6 +7,7 @@ using StoreBLL.DTO;
 using StoreBLL.Interfaces;
 using StoreBLL.Services;
 using StoreDAL.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace API.Controllers
 {
@@ -70,17 +71,18 @@ namespace API.Controllers
             };
         }
 
-        //[Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize]
         [HttpGet(AccountRoutes.CurrentUser)]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
             return new UserDto
             {
                 Email = user.Email,
-                Token = await _tokenService.GenerateToken(user),
+                Token = token,
             };
         }
     }
