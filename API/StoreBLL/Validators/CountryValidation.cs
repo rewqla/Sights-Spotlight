@@ -19,12 +19,15 @@ public class CountryValidation : AbstractValidator<Country>
 
         RuleFor(x => x.Name)
             .MinimumLength(3)
+            .WithMessage("The name must be greater than 3");
+
+        RuleFor(x => x.Name)
             .MustAsync(ValidateName)
             .WithMessage("The name must be greater than 3");
 
         RuleFor(x => x.MainImageURL)
             .NotEmpty()
-            .WithMessage("The ImageURL must be not empty"); ;
+            .WithMessage("The MainImageURL must be not empty"); ;
     }
 
     private async Task<bool> ValidateName(string country, CancellationToken cancellationToken)

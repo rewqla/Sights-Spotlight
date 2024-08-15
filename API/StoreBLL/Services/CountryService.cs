@@ -42,8 +42,7 @@ namespace StoreBLL.Services
 
         public async Task<int> CreateCountry(CountryCreateDto countryCreateDto, CancellationToken cancellationToken = default)
         {
-            try
-            {
+
                 var country = _mapper.Map<Country>(countryCreateDto);
                 await _countryValidator.ValidateAndThrowAsync(country);
 
@@ -51,11 +50,7 @@ namespace StoreBLL.Services
                 await _countryRepository.Complete();
 
                 return country.Id;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("An error occurred while creating the country.", ex);
-            }
+
         }
     }
 }

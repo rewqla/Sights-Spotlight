@@ -98,16 +98,13 @@ namespace API
             {
                 options.AddPolicy(PolicyRoles.Admin, policy =>
                     policy.RequireClaim("role", "admin"));
-
                 options.AddPolicy(PolicyRoles.Member, policy =>
-                      policy.RequireClaim("role", "user"));
-
+                      policy.RequireClaim("role", "Member"));
                 options.AddPolicy(PolicyRoles.Viewer, policy =>
-                      policy.RequireClaim("role", "member"));
+                      policy.RequireClaim("role", "viewer"));
             });
 
             services.AddScoped<IValidator<Country>, CountryValidation>();
-
 
             services.AddScoped<ICountryRepository, CountryRepository>();
 
@@ -123,6 +120,7 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<ValidationMappingMiddleware>();
 
             app.UseHttpsRedirection();
 
@@ -152,7 +150,6 @@ namespace API
                 logger.LogError(ex, "A problem occurred during migration");
             }
 
-            app.UseMiddleware<ValidationMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

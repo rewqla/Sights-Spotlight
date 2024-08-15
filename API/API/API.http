@@ -10,13 +10,15 @@ GET {{API_HostAddress}}/api/country
 ###
 POST {{API_HostAddress}}/api/country/create
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI0MzUwMTQzfQ.pGE0AsSDVNcWdBhQBXoxHYwLEfee8UNDRhVstWU2fVIRfAZiVD1tirt4W8vbXmGM8i7eZnJfH5Onh7BRr71cjQ
 
 {
-  "name": "Bolgarian",
+  "name": "sd",
   "description": "Not bad as mad",
-  "mainImgaeURL": "23",
+  "mainImageURL": "23",
   "secondaryImageURL": "2223"
 }
 
 ###
 GET {{API_HostAddress}}/api/country/3
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJTdGVuTmVwYW5AZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlN0ZW5OZXBhbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Ik1lbWJlciIsImV4cCI6MTcyNDM1MDQxNX0.8VryuI97wM9Xym-OYtO4mGJsbCZ1_BeXdMBr8aqFSA3hlZSdXsAGIygHK28llOILQLhwe1KjPMAT2xcGkDkqHg

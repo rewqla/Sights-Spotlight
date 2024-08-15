@@ -18,6 +18,7 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetAll)]
+        //[Authorize(PolicyRoles.Member)]
         public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries(CancellationToken cancellationToken)
         {
             var countries = await _countryService.GetAllCountries(cancellationToken);
@@ -26,6 +27,7 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetById)]
+        //[Authorize(PolicyRoles.Member)]
         public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id, CancellationToken cancellationToken)
         {
             var country = await _countryService.GetCountryDetailsById(id, cancellationToken);
@@ -39,7 +41,7 @@ namespace API.Controllers
         }
 
         [HttpPost(CountryRoutes.Create)]
-        //[Authorize(PolicyRoles.Admin)]
+        //[Authorize(PolicyRoles.Member)]
         public async Task<ActionResult> CreateCountry([FromBody] CountryCreateDto countryCreateDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -57,3 +59,4 @@ namespace API.Controllers
 //update
 //Request reponse conract
 //advnced
+//fix valdiation 

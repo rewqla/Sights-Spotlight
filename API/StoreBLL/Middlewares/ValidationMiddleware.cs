@@ -1,20 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace StoreBLL.Middlewares
 {
-    public class ValidationMiddleware
+    public class ValidationMappingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ValidationMiddleware(RequestDelegate next)
+        public ValidationMappingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -25,10 +20,9 @@ namespace StoreBLL.Middlewares
             {
                 await _next(context);
             }
-            catch (FluentValidation.ValidationException ex)
+            catch (ValidationException ex)
             {
                 context.Response.StatusCode = 400;
-
                 var validationFailureResponse = new ValidationFailureResponse
                 {
                     Errors = ex.Errors.Select(x => new ValidationResponse
@@ -42,6 +36,7 @@ namespace StoreBLL.Middlewares
             }
         }
     }
+
 
     public class ValidationFailureResponse
     {
