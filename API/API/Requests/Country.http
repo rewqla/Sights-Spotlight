@@ -1,0 +1,22 @@
+
+@authToken=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI0NTIxMzM2fQ.6cJtWqr0-eOh4TI1C7ef4xIz65cZ-reUFBZMOBqOG-3DXwdnCOuT6xJwilbI5XZAss8eYGp20N0IWsagrb-8pg
+
+### Get all countries
+GET  {{baseUrl}}/api/country
+Authorization: Bearer {{authToken}}
+
+### Get country by Id
+GET  {{baseUrl}}/api/country/3
+Authorization: Bearer {{authToken}}
+
+### Create a new country
+POST  {{baseUrl}}/api/country/create
+Content-Type: application/json
+Authorization:Bearer {{authToken}}
+
+{
+  "name": "Italy2",
+  "description": "Not bad as mad",
+  "mainImageURL": "23",
+  "secondaryImageURL": "2223"
+}
