@@ -1,4 +1,5 @@
-﻿using StoreBLL.DTO;
+﻿using API.Contract.Requests;
+using API.Contract.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace StoreBLL.Interfaces
 {
     public interface ICountryService
     {
-        Task<IEnumerable<CountryDto>> GetAllCountries(CancellationToken cancellationToken = default);
-        Task<CountryDetailsDto> GetCountryDetailsById(int id, CancellationToken cancellationToken = default);
-        Task<int> CreateCountry(CountryCreateDto countryCreateDto, CancellationToken cancellationToken = default);
+        Task<IEnumerable<CountryResponse>> GetAllCountries(CancellationToken cancellationToken = default);
+        Task<CountryDetailsResponse> GetCountryDetailsById(int id, CancellationToken cancellationToken = default);
+        Task<int> CreateCountry(CreateCountryRequest createCountry, CancellationToken cancellationToken = default);
     }
 }

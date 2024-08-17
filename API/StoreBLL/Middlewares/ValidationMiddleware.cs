@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using API.Contract.Responses;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using ValidationException = FluentValidation.ValidationException;
@@ -35,17 +36,5 @@ namespace StoreBLL.Middlewares
                 await context.Response.WriteAsJsonAsync(validationFailureResponse);
             }
         }
-    }
-
-
-    public class ValidationFailureResponse
-    {
-        public required IEnumerable<ValidationResponse> Errors { get; init; }
-    }
-
-    public class ValidationResponse
-    {
-        public required string PropertyName { get; init; }
-        public required string Message { get; init; }
     }
 }

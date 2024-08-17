@@ -13,7 +13,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI0MzUwMTQzfQ.pGE0AsSDVNcWdBhQBXoxHYwLEfee8UNDRhVstWU2fVIRfAZiVD1tirt4W8vbXmGM8i7eZnJfH5Onh7BRr71cjQ
 
 {
-  "name": "Italy",
+  "name": "Italy2",
   "description": "Not bad as mad",
   "mainImageURL": "23",
   "secondaryImageURL": "2223"

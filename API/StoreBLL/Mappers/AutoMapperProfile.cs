@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+﻿using API.Contract.Requests;
+using API.Contract.Responses;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
-using StoreBLL.DTO;
 using StoreDAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,16 @@ namespace StoreBLL.Mappers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Country, CountryDto>()
+            CreateMap<Country, CountryResponse>()
                 .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.MainImageURL));
 
-            CreateMap<Country, CountryDetailsDto>()
+            CreateMap<Country, CountryDetailsResponse>()
                    .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.SecondaryImageURL))
-                   .ForMember(dest => dest.CountrySightDtos, opt => opt.MapFrom(src => src.Sights));
-            CreateMap<Sight, CountrySightDto>()
+                   .ForMember(dest => dest.CountrySights, opt => opt.MapFrom(src => src.Sights));
+            CreateMap<Sight, CountrySightResponse>()
                 .ForMember(dest => dest.ImageURLs, opt => opt.MapFrom(src => src.SightPhotos.Select(p => p.Url)));
 
-            CreateMap<CountryCreateDto, Country>();
+            CreateMap<CreateCountryRequest, Country>();
         }
     }
 }

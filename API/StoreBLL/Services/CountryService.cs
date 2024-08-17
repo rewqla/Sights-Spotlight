@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+﻿using API.Contract.Requests;
+using API.Contract.Responses;
+using AutoMapper;
 using FluentValidation;
-using StoreBLL.DTO;
 using StoreBLL.Interfaces;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
@@ -26,24 +27,23 @@ namespace StoreBLL.Services
             _countryValidator = countryValidator;
         }
 
-        public async Task<IEnumerable<CountryDto>> GetAllCountries(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<CountryResponse>> GetAllCountries(CancellationToken cancellationToken = default)
         {
             var countries = await _countryRepository.GetAll();
 
-            return _mapper.Map<IEnumerable<CountryDto>>(countries);
+            return _mapper.Map<IEnumerable<CountryResponse>>(countries);
         }
 
-        public async Task<CountryDetailsDto> GetCountryDetailsById(int id, CancellationToken cancellationToken = default)
+        public async Task<CountryDetailsResponse> GetCountryDetailsById(int id, CancellationToken cancellationToken = default)
         {
             var country = await _countryRepository.GetCountryByIdWithSights(id);
 
-            return _mapper.Map<CountryDetailsDto>(country);
+            return _mapper.Map<CountryDetailsResponse>(country);
         }
 
-        public async Task<int> CreateCountry(CountryCreateDto countryCreateDto, CancellationToken cancellationToken = default)
+        public async Task<int> CreateCountry(CreateCountryRequest createCountry, CancellationToken cancellationToken = default)
         {
-
-                var country = _mapper.Map<Country>(countryCreateDto);
+                var country = _mapper.Map<Country>(createCountry);
                 await _countryValidator.ValidateAndThrowAsync(country);
 
                 await _countryRepository.Add(country);

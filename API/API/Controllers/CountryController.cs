@@ -1,8 +1,9 @@
 ﻿using API.Authorization;
+using API.Contract.Requests;
+using API.Contract.Responses;
 using API.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StoreBLL.DTO;
 using StoreBLL.Interfaces;
 
 
@@ -18,7 +19,7 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetAll)]
-        public async Task<ActionResult<IEnumerable<CountryDto>>> GetCountries(CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<CountryResponse>>> GetCountries(CancellationToken cancellationToken)
         {
             var countries = await _countryService.GetAllCountries(cancellationToken);
 
@@ -27,7 +28,7 @@ namespace API.Controllers
 
         [HttpGet(CountryRoutes.GetById)]
         [Authorize(PolicyRoles.Member)]
-        public async Task<ActionResult<IEnumerable<CountryDetailsDto>>> GetCountryById(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<CountryDetailsResponse>>> GetCountryById(int id, CancellationToken cancellationToken)
         {
             var country = await _countryService.GetCountryDetailsById(id, cancellationToken);
 
@@ -41,21 +42,16 @@ namespace API.Controllers
 
         [HttpPost(CountryRoutes.Create)]
         [Authorize(PolicyRoles.Admin)]
-        public async Task<ActionResult> CreateCountry([FromBody] CountryCreateDto countryCreateDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> CreateCountry([FromBody] CreateCountryRequest createCountry, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            int createdCounryId = await _countryService.CreateCountry(countryCreateDto, cancellationToken);
+            int createdCounryId = await _countryService.CreateCountry(createCountry, cancellationToken);
 
             return Ok(createdCounryId);
         }
     }
 }
-
-//update
-//Request reponse conract
-//advnced
-//fix permissions

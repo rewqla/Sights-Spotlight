@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\API.Contract\API.Contract.csproj" />
     <ProjectReference Include="..\StoreDAL\StoreDAL.csproj" />
   </ItemGroup>
 

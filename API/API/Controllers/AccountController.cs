@@ -1,9 +1,10 @@
-﻿using API.Routes;
+﻿using API.Contract.Requests;
+using API.Contract.Responses;
+using API.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StoreBLL.DTO;
 using StoreBLL.Interfaces;
 using StoreBLL.Services;
 using StoreDAL.Entities;
@@ -23,17 +24,17 @@ namespace API.Controllers
         }
 
         [HttpPost(AccountRoutes.Register)]
-        public async Task<ActionResult<UserDto>> RegisterUser(RegisterDto registerDto)
+        public async Task<ActionResult<UserResponse>> RegisterUser(RegisterRequest registerRequest)
         {
             var user = new User
             {
-                UserName = registerDto.Username,
-                Email = registerDto.Email,
-                FirstName = registerDto.FirstName,
-                LastName = registerDto.LastName,
+                UserName = registerRequest.Username,
+                Email = registerRequest.Email,
+                FirstName = registerRequest.FirstName,
+                LastName = registerRequest.LastName,
             };
 
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            var result = await _userManager.CreateAsync(user, registerRequest.Password);
 
             if (!result.Succeeded)
             {
@@ -47,24 +48,24 @@ namespace API.Controllers
 
             await _userManager.AddToRoleAsync(user, "Member");
 
-            var createdUser = await _userManager.FindByNameAsync(registerDto.Username);
+            var createdUser = await _userManager.FindByNameAsync(registerRequest.Username);
 
-            return new UserDto
+            return new UserResponse
             {
                 Email = user.Email,
-                Token = await _tokenService.GenerateToken(createdUser),
+                Token = await _tokenService.GenerateToken(createdUser!),
             };
         }
 
         [HttpPost(AccountRoutes.Login)]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserResponse>> Login(LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByNameAsync(loginDto.Username);
+            var user = await _userManager.FindByNameAsync(loginRequest.Username);
 
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
+            if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequest.Password))
                 return Unauthorized();
 
-            return new UserDto
+            return new UserResponse
             {
                 Email = user.Email,
                 Token = await _tokenService.GenerateToken(user),
@@ -73,13 +74,13 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet(AccountRoutes.CurrentUser)]
-        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        public async Task<ActionResult<UserResponse>> GetCurrentUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
             var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            return new UserDto
+            return new UserResponse
             {
                 Email = user.Email,
                 Token = token,
