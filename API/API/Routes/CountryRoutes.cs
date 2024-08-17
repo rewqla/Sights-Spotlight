@@ -2,7 +2,7 @@
 {
     public static class CountryRoutes
     {
-        private const string BaseRoute = "api/country";
+        private const string BaseRoute = "api/countries";
 
         public const string GetAll = $"{BaseRoute}/";
         public const string GetById = $"{BaseRoute}/{{id}}";

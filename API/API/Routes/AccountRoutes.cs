@@ -2,10 +2,10 @@
 {
     public static class AccountRoutes
     {
-        private const string BaseRoute = "api/account";
+        private const string BaseRoute = "api/accounts";
 
         public const string Register = $"{BaseRoute}/register";
         public const string Login = $"{BaseRoute}/login";
-        public const string CurrentUser = $"{BaseRoute}/currentUser";
+        public const string CurrentUser = $"{BaseRoute}/current-user";
     }
 }
