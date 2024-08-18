@@ -1,0 +1,30 @@
+﻿using Microsoft.EntityFrameworkCore;
+using StoreDAL.Data;
+using StoreDAL.Entities;
+using StoreDAL.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StoreDAL.Repository
+{
+    public class SightsRepository : GenericRepository<Sight>, ISightRepository
+    {
+        private readonly DbSet<Sight> _sightDbSet;
+
+        public SightsRepository(StoreContext context) : base(context)
+        {
+            _sightDbSet = context.Set<Sight>();
+        }
+
+        public async Task<IEnumerable<Sight>> GetAllSightsWithCountry(CancellationToken cancellationToken = default)
+        {
+            return await _sightDbSet
+                .Include(s => s.Country)
+                .Include(s => s.SightPhotos).ToListAsync();
+
+        }
+    }
+}

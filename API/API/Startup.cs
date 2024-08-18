@@ -107,9 +107,11 @@ namespace API
             services.AddScoped<IValidator<Country>, CountryValidation>();
 
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ISightRepository, SightsRepository>();
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ISightService, SightService>();
 
         }
 
