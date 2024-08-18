@@ -1,6 +1,6 @@
 
 ### Login user
-POST {{baseUrl}}/api/account/login
+POST {{baseUrl}}/api/accounts/login
 Content-Type: application/json
 
 {

@@ -44,14 +44,23 @@ namespace API.Controllers
         [Authorize(PolicyRoles.Admin)]
         public async Task<IActionResult> CreateCountry([FromBody] CreateCountryRequest createCountry, CancellationToken cancellationToken)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             int createdCounryId = await _countryService.CreateCountry(createCountry, cancellationToken);
 
             return Ok(createdCounryId);
+        }
+
+        [HttpPut(CountryRoutes.Update)]
+        [Authorize(PolicyRoles.Admin)]
+        public async Task<IActionResult> UpdateCountry([FromBody] UpdateCountryRequest updateCountry, CancellationToken cancellationToken)
+        {
+            var result = await _countryService.UpdateCountry(updateCountry, cancellationToken);
+
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent(); 
         }
     }
 }

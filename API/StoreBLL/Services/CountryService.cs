@@ -2,6 +2,7 @@
 using API.Contract.Responses;
 using AutoMapper;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using StoreBLL.Interfaces;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
@@ -43,14 +44,33 @@ namespace StoreBLL.Services
 
         public async Task<int> CreateCountry(CreateCountryRequest createCountry, CancellationToken cancellationToken = default)
         {
-                var country = _mapper.Map<Country>(createCountry);
-                await _countryValidator.ValidateAndThrowAsync(country);
+            var country = _mapper.Map<Country>(createCountry);
+            await _countryValidator.ValidateAndThrowAsync(country);
 
-                await _countryRepository.Add(country);
-                await _countryRepository.Complete();
+            await _countryRepository.Add(country);
+            await _countryRepository.Complete();
 
-                return country.Id;
+            return country.Id;
 
+        }
+
+        public async Task<bool> UpdateCountry(UpdateCountryRequest updateCountry, CancellationToken cancellationToken = default)
+        {
+            var country = await _countryRepository.FindById(updateCountry.Id);
+
+            if (country == null)
+            {
+                return false;
+            }
+
+            var updatedCountry = _mapper.Map<Country>(updateCountry);
+
+            await _countryValidator.ValidateAndThrowAsync(updatedCountry);
+
+            _countryRepository.Update(country);
+            await _countryRepository.Complete();
+
+            return true;
         }
     }
 }

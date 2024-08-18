@@ -25,6 +25,7 @@ namespace StoreBLL.Mappers
                 .ForMember(dest => dest.ImageURLs, opt => opt.MapFrom(src => src.SightPhotos.Select(p => p.Url)));
 
             CreateMap<CreateCountryRequest, Country>();
+            CreateMap<UpdateCountryRequest, Country>();
         }
     }
 }
