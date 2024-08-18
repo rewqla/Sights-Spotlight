@@ -72,5 +72,20 @@ namespace StoreBLL.Services
 
             return true;
         }
+
+        public async Task<bool> DeleteCountry(int id, CancellationToken cancellationToken)
+        {
+            var country = await _countryRepository.FindById(id);
+
+            if (country == null)
+            {
+                return false;
+            }
+
+            _countryRepository.Delete(country);
+            await _countryRepository.Complete();
+
+            return true;
+        }
     }
 }

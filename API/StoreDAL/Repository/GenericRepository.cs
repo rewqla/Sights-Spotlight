@@ -29,21 +29,15 @@ namespace StoreDAL.Repository
         }
         public async Task Add(TEntity entity, CancellationToken cancellationToken = default)
         {
-            await _dbSet.AddAsync(entity);
+            await _dbSet.AddAsync(entity, cancellationToken);
         }
 
-        public async Task Delete(int id, CancellationToken cancellationToken = default)
+        public void Delete(TEntity entity)
         {
-            var entity = await _dbSet.FindAsync(id, cancellationToken);
-
-            if (entity != null)
-            {
-                _dbSet.Remove(entity);
-                await _context.AddAsync(entity);
-            }
+            _dbSet.Remove(entity);
         }
 
-        public void Update(TEntity entity, CancellationToken cancellationToken = default)
+        public void Update(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
         }

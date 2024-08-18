@@ -10,7 +10,7 @@ GET  {{baseUrl}}/api/countries/12
 Authorization: Bearer {{authToken}}
 
 ### Create a new country
-POST  {{baseUrl}}/api/countries/create
+POST  {{baseUrl}}/api/countries
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
@@ -22,7 +22,7 @@ Authorization:Bearer {{authToken}}
 }
 
 ### Update the country
-Put  {{baseUrl}}/api/countries/update/18
+Put  {{baseUrl}}/api/countries/18
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
@@ -33,3 +33,8 @@ Authorization:Bearer {{authToken}}
   "mainImageURL": "23",
   "secondaryImageURL": "2223"
 }
+
+### Update the country
+DELETE  {{baseUrl}}/api/countries/12
+Content-Type: application/json
+Authorization:Bearer {{authToken}}

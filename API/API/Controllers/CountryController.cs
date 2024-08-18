@@ -62,5 +62,19 @@ namespace API.Controllers
 
             return NoContent(); 
         }
+
+        [HttpDelete(CountryRoutes.Delete)]
+        [Authorize(PolicyRoles.Admin)]
+        public async Task<IActionResult> DeleteCountry(int id, CancellationToken cancellationToken)
+        {
+            var result = await _countryService.DeleteCountry(id, cancellationToken);
+
+            if (!result)
+            {
+                return NotFound(new { message = "Country not found" });
+            }
+
+            return NoContent(); 
+        }
     }
 }
