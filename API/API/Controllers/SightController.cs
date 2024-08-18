@@ -1,4 +1,5 @@
-﻿using API.Contract.Responses;
+﻿using API.Contract.Requests.Sight;
+using API.Contract.Responses.Country;
 using API.Routes;
 using Microsoft.AspNetCore.Mvc;
 using StoreBLL.Interfaces;
@@ -15,9 +16,9 @@ namespace API.Controllers
         }
 
         [HttpGet(SightRoutes.GetAll)]
-        public async Task<ActionResult<IAsyncEnumerable<CountryResponse>>> GetSights(CancellationToken cancellationToken)
+        public async Task<ActionResult<IAsyncEnumerable<CountryResponse>>> GetSights([FromQuery] GetAllSightsRequest request, CancellationToken cancellationToken)
         {
-            var sights = await _sightsService.GetAllSights(cancellationToken);
+            var sights = await _sightsService.GetAllSights(request, cancellationToken);
 
             return Ok(sights);
         }

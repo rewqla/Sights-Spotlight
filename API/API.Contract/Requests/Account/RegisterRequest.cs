@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Contract.Requests
+namespace API.Contract.Requests.Account
 {
     public class RegisterRequest : LoginRequest
     {

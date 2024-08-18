@@ -1,0 +1,3 @@
+
+### Get country by Id
+GET  {{baseUrl}}/api/sights?Name=Heidelberg

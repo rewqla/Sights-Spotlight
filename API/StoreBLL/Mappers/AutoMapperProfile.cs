@@ -1,5 +1,7 @@
 ﻿using API.Contract.Requests;
-using API.Contract.Responses;
+using API.Contract.Requests.Country;
+using API.Contract.Requests.Sight;
+using API.Contract.Responses.Country;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StoreDAL.Entities;

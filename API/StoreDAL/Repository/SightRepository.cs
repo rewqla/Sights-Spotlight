@@ -24,7 +24,6 @@ namespace StoreDAL.Repository
             return await _sightDbSet
                 .Include(s => s.Country)
                 .Include(s => s.SightPhotos).ToListAsync();
-
         }
     }
 }

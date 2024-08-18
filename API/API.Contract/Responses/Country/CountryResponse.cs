@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Contract.Requests
+namespace API.Contract.Responses.Country
 {
-    public class UpdateCountryRequest : CreateCountryRequest
+    public class CountryResponse
     {
         public required int Id { get; set; }
+        public required string Name { get; set; }
+        public required string ImageURL { get; set; }
     }
 }

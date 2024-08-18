@@ -1,5 +1,6 @@
 ﻿using API.Contract.Requests;
-using API.Contract.Responses;
+using API.Contract.Requests.Country;
+using API.Contract.Responses.Country;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;

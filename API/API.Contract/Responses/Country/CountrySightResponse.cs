@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Contract.Responses
+namespace API.Contract.Responses.Country
 {
     public class CountrySightResponse
     {

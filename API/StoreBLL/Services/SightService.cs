@@ -1,5 +1,6 @@
 ﻿using API.Contract.Requests;
-using API.Contract.Responses;
+using API.Contract.Requests.Sight;
+using API.Contract.Responses.Sight;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +28,19 @@ namespace StoreBLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<SightsResponse>> GetAllSights(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<SightsResponse>> GetAllSights(GetAllSightsRequest request, CancellationToken cancellationToken = default)
         {
             var sights = await _sightRepository.GetAllSightsWithCountry(cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(request.Country))
+            {
+                sights = sights.Where(sight => sight.Country.Name.Contains(request.Country, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Name))
+            {
+                sights = sights.Where(sight => sight.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase));
+            }
 
             return sights.Select(sight => new SightsResponse
             {

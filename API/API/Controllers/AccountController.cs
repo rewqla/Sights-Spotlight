@@ -1,5 +1,5 @@
-﻿using API.Contract.Requests;
-using API.Contract.Responses;
+﻿using API.Contract.Requests.Account;
+using API.Contract.Responses.Account;
 using API.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

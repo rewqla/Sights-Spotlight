@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using API.Contract.Requests.Country;
 
 namespace API.Contract.Requests
 {
-    public class LoginRequest
+    public class UpdateCountryRequest : CreateCountryRequest
     {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
+        public required int Id { get; set; }
     }
 }

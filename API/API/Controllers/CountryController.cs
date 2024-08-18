@@ -1,6 +1,7 @@
 ﻿using API.Authorization;
 using API.Contract.Requests;
-using API.Contract.Responses;
+using API.Contract.Requests.Country;
+using API.Contract.Responses.Country;
 using API.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
