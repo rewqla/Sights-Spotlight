@@ -37,9 +37,14 @@ namespace StoreBLL.Services
                 sights = sights.Where(sight => sight.Country.Name.Contains(request.Country, StringComparison.OrdinalIgnoreCase));
             }
 
-            if (!string.IsNullOrWhiteSpace(request.Name))
+            if (request.YearOfFoundationFrom.HasValue)
             {
-                sights = sights.Where(sight => sight.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase));
+                sights = sights.Where(sight => sight.YearOfFoundation >= request.YearOfFoundationFrom.Value);
+            }
+
+            if (request.YearOfFoundationTo.HasValue)
+            {
+                sights = sights.Where(sight => sight.YearOfFoundation <= request.YearOfFoundationTo.Value);
             }
 
             return sights.Select(sight => new SightsResponse
@@ -47,6 +52,7 @@ namespace StoreBLL.Services
                 Id = sight.Id,
                 Name = sight.Name,
                 Country = sight.Country.Name,
+                YearOfFoundation = sight.YearOfFoundation,
                 Description = sight.Description,
                 Images = sight.SightPhotos.Select(photo => photo.Url).ToList()
             }).ToList();

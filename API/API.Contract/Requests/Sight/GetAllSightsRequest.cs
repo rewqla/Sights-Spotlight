@@ -9,6 +9,7 @@ namespace API.Contract.Requests.Sight
     public class GetAllSightsRequest
     {
         public string? Country { get; set; }
-        public string? Name { get; set; }
+        public int? YearOfFoundationFrom { get; set; }
+        public int? YearOfFoundationTo { get; set; }
     }
 }
