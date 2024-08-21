@@ -47,6 +47,15 @@ namespace StoreBLL.Services
                 sights = sights.Where(sight => sight.YearOfFoundation <= request.YearOfFoundationTo.Value);
             }
 
+            sights = request.SortBy switch
+            {
+                "Country" => sights.OrderBy(sight => sight.Name),
+                "-Country" => sights.OrderByDescending(sight => sight.Name),
+                "YearOfFoundation" => sights.OrderBy(sight => sight.YearOfFoundation),
+                "-YearOfFoundation" => sights.OrderByDescending(sight => sight.YearOfFoundation),
+                _ => sights 
+            };
+
             return sights.Select(sight => new SightsResponse
             {
                 Id = sight.Id,

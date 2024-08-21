@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Contract.Requests.Sight
+namespace StoreBLL.Models
 {
-    public class GetAllSightsRequest
+    public class GetAllMoviesOptions
     {
         public string? Country { get; set; }
         public int? YearOfFoundationFrom { get; set; }
         public int? YearOfFoundationTo { get; set; }
-        public string? SortBy { get; set; }
+        public string? SortField { get; set; }
     }
 }
