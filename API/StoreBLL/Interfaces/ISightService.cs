@@ -11,6 +11,7 @@ namespace StoreBLL.Interfaces
 {
     public interface ISightService
     {
-        Task<IEnumerable<SightsResponse>> GetAllSights(GetAllSightsRequest request, CancellationToken cancellationToken = default);
+        Task<SightsResponse> GetAllSights(GetAllSightsRequest request, CancellationToken cancellationToken = default);
+        Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default);
     }
 }

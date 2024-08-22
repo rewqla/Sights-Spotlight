@@ -25,5 +25,22 @@ namespace StoreDAL.Repository
                 .Include(s => s.Country)
                 .Include(s => s.SightPhotos).ToListAsync();
         }
+
+        public async Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default)
+        {
+            var query = _sightDbSet.AsQueryable();
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                query = query.Where(s => s.Country.Name.Contains(country, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (yearOfFoundation.HasValue)
+            {
+                query = query.Where(s => s.YearOfFoundation == yearOfFoundation.Value);
+            }
+
+            return await query.CountAsync(token);
+        }
     }
 }

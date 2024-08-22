@@ -28,9 +28,11 @@ namespace StoreBLL.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<SightsResponse>> GetAllSights(GetAllSightsRequest request, CancellationToken cancellationToken = default)
+        public async Task<SightsResponse> GetAllSights(GetAllSightsRequest request, CancellationToken cancellationToken = default)
         {
             var sights = await _sightRepository.GetAllSightsWithCountry(cancellationToken);
+
+            var total = await _sightRepository.GetCountAsync(request.Country, request.YearOfFoundationFrom, cancellationToken);
 
             if (!string.IsNullOrWhiteSpace(request.Country))
             {
@@ -49,14 +51,18 @@ namespace StoreBLL.Services
 
             sights = request.SortBy switch
             {
-                "Country" => sights.OrderBy(sight => sight.Name),
-                "-Country" => sights.OrderByDescending(sight => sight.Name),
+                "Country" => sights.OrderBy(sight => sight.Country.Name),
+                "-Country" => sights.OrderByDescending(sight => sight.Country.Name),
                 "YearOfFoundation" => sights.OrderBy(sight => sight.YearOfFoundation),
                 "-YearOfFoundation" => sights.OrderByDescending(sight => sight.YearOfFoundation),
-                _ => sights 
+                _ => sights
             };
 
-            return sights.Select(sight => new SightsResponse
+            sights = sights
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize);
+
+            var sightResponses = sights.Select(sight => new SightResponse
             {
                 Id = sight.Id,
                 Name = sight.Name,
@@ -65,6 +71,19 @@ namespace StoreBLL.Services
                 Description = sight.Description,
                 Images = sight.SightPhotos.Select(photo => photo.Url).ToList()
             }).ToList();
+
+            return new SightsResponse
+            {
+                Items = sightResponses,
+                Page = request.Page,
+                PageSize = request.PageSize,
+                Total = total
+            };
+        }
+
+        public async Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default)
+        {
+            return await _sightRepository.GetCountAsync(country, yearOfFoundation, token);
         }
     }
 }

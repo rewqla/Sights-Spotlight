@@ -11,5 +11,6 @@ namespace StoreDAL.Interfaces
     public interface ISightRepository : IGenericRepository<Sight>
     {
         Task<IEnumerable<Sight>> GetAllSightsWithCountry(CancellationToken cancellationToken = default);
+        Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default);
     }
 }
