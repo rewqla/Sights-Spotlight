@@ -1,4 +1,5 @@
 ﻿using API.Authorization;
+using API.Health;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -104,6 +105,9 @@ namespace API
                       policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Viewer));
             });
 
+            services.AddHealthChecks()
+                 .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
+
             services.AddScoped<IValidator<Country>, CountryValidation>();
 
             services.AddScoped<ICountryRepository, CountryRepository>();
@@ -155,6 +159,8 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapHealthChecks("/_health");
             });
         }
     }
