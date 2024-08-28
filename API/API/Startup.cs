@@ -105,7 +105,16 @@ namespace API
                       policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Viewer));
             });
 
-            services.AddResponseCaching();
+            //services.AddResponseCaching();
+            services.AddOutputCache(x =>
+            {
+                x.AddBasePolicy(c => c.Cache());
+                x.AddPolicy("SightCache", c =>
+                    c.Cache()
+                    .Expire(TimeSpan.FromMinutes(1))
+                    .SetVaryByQuery(new[] { "country", "yearOfFoundationFrom", "YearOfFoundationTo", "page", "pageSize" })
+                    .Tag("sights"));
+            });
 
             services.AddHealthChecks()
                  .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
@@ -142,7 +151,8 @@ namespace API
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseResponseCaching();
+            //app.UseResponseCaching();
+            app.UseOutputCache();
 
             app.UseStaticFiles();
 
