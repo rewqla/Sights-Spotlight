@@ -105,6 +105,8 @@ namespace API
                       policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Viewer));
             });
 
+            services.AddResponseCaching();
+
             services.AddHealthChecks()
                  .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
 
@@ -139,6 +141,8 @@ namespace API
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseResponseCaching();
 
             app.UseStaticFiles();
 

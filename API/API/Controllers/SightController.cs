@@ -17,6 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet(SightRoutes.GetAll)]
+        [ResponseCache(Duration = 60, VaryByQueryKeys = new[] { "country", "yearOfFoundationFrom", "YearOfFoundationTo", "page", "pageSize" }, VaryByHeader = "Accept, Accept-Encoding", Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<SightsResponse>> GetSights([FromQuery] GetAllSightsRequest request, CancellationToken cancellationToken)
         {
             var sights = await _sightsService.GetAllSights(request, cancellationToken);
