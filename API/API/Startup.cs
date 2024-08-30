@@ -128,6 +128,7 @@ namespace API
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ISightService, SightService>();
 
+            services.AddScoped<ApiKeyAuthFilter>();
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Program> logger)

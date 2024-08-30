@@ -11,6 +11,7 @@ Authorization: Bearer {{authToken}}
 
 ### Create a new country
 POST  {{baseUrl}}/api/countries
+x-api-key: ab813b98016e4cf181cb20b88f756f28
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 

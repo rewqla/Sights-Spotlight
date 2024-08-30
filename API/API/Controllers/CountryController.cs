@@ -42,7 +42,8 @@ namespace API.Controllers
         }
 
         [HttpPost(CountryRoutes.Create)]
-        [Authorize(PolicyRoles.Admin)]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
+        //[Authorize(PolicyRoles.Admin)]
         public async Task<IActionResult> CreateCountry([FromBody] CreateCountryRequest createCountry, CancellationToken cancellationToken)
         {
             int createdCounryId = await _countryService.CreateCountry(createCountry, cancellationToken);
