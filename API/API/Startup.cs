@@ -2,6 +2,7 @@
 using API.Health;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -91,14 +92,17 @@ namespace API
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTSettings:TokenKey"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTSettings:TokenKey"]!))
                 };
             });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(PolicyRoles.Admin, policy =>
-                    policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Admin));
+                //options.AddPolicy(PolicyRoles.Admin, policy =>
+                //    policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Admin));
+                options.AddPolicy(PolicyClaims.Admin,
+                    p => p.AddRequirements(new AdminAuthRequirement(Configuration["ApiKey"]!)));
+
                 options.AddPolicy(PolicyRoles.Member, policy =>
                       policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Member));
                 options.AddPolicy(PolicyRoles.Viewer, policy =>

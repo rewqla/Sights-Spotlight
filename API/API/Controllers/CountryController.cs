@@ -28,7 +28,8 @@ namespace API.Controllers
         }
 
         [HttpGet(CountryRoutes.GetById)]
-        [Authorize(PolicyRoles.Member)]
+        [Authorize(PolicyRoles.Admin)]
+        //[Authorize(PolicyRoles.Member)]
         public async Task<ActionResult<IAsyncEnumerable<CountryDetailsResponse>>> GetCountryById(int id, CancellationToken cancellationToken)
         {
             var country = await _countryService.GetCountryDetailsById(id, cancellationToken);
