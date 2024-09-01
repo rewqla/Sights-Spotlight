@@ -13,6 +13,7 @@ namespace StoreDAL.Repository
     {
         private readonly StoreContext _context;
         private readonly DbSet<TEntity> _dbSet;
+        private bool _disposed = false;
 
         public GenericRepository(StoreContext context)
         {
@@ -45,6 +46,18 @@ namespace StoreDAL.Repository
         public async Task<int> Complete()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+                _disposed = true;
+            }
         }
 
         public async Task Dispose()
