@@ -3,17 +3,9 @@ using API.Contract.Requests.Country;
 using API.Contract.Responses.Country;
 using AutoMapper;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using StoreBLL.Interfaces;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace StoreBLL.Services
 {
