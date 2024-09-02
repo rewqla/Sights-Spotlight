@@ -1,6 +1,7 @@
 
 ### Get sights using filtering and sorting
-GET  {{baseUrl}}/api/sights?Name=Heidelberg&SortBy=YearOfFoundation
+GET  {{baseUrl}}/api/sights?Country=Heidelberg&SortBy=YearOfFoundation
 
 ### Get sights with paging
-GET  {{baseUrl}}/api/sights?page=2&pageSize=5
+GET  {{baseUrl}}/api/sights?page=2&pageSize=5&Country=Heidelberg
+

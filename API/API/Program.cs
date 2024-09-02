@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Events;
 using StoreBLL.Interfaces;
 using StoreBLL.Mappers;
 using StoreBLL.Services;
@@ -21,8 +22,10 @@ namespace API
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
+                  .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                 .Enrich.FromLogContext()
+                 .WriteTo.Console()
+                 .CreateBootstrapLogger();
 
             try
             {

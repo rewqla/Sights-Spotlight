@@ -4,6 +4,7 @@ using API.Contract.Responses.Sight;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StoreBLL.Interfaces;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
@@ -21,18 +22,23 @@ namespace StoreBLL.Services
     public class SightService : ISightService
     {
         private readonly ISightRepository _sightRepository;
-        private readonly IMapper _mapper;
-        public SightService(ISightRepository sightRepository, IMapper mapper)
+        private readonly IMapper _mapper; 
+        private readonly ILogger<SightService> _logger;
+        public SightService(ISightRepository sightRepository, IMapper mapper, ILogger<SightService> logger)
         {
             _sightRepository = sightRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<SightsResponse> GetAllSights(GetAllSightsRequest request, CancellationToken cancellationToken = default)
         {
+            _logger.LogInformation("Retrieving all sights");
+
             var sights = await _sightRepository.GetAllSightsWithCountry(cancellationToken);
 
             var total = await _sightRepository.GetCountAsync(request.Country, request.YearOfFoundationFrom, cancellationToken);
+            _logger.LogInformation("Fetched {Total} sights from the database", total);
 
             if (!string.IsNullOrWhiteSpace(request.Country))
             {
@@ -57,10 +63,12 @@ namespace StoreBLL.Services
                 "-YearOfFoundation" => sights.OrderByDescending(sight => sight.YearOfFoundation),
                 _ => sights
             };
+            _logger.LogInformation("Sorted sights by: {SortBy}", request.SortBy);
 
             sights = sights
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize);
+            _logger.LogInformation("Paginated sights to Page: {Page}, PageSize: {PageSize}", request.Page, request.PageSize);
 
             var sightResponses = sights.Select(sight => new SightResponse
             {
@@ -71,6 +79,8 @@ namespace StoreBLL.Services
                 Description = sight.Description,
                 Images = sight.SightPhotos.Select(photo => photo.Url).ToList()
             }).ToList();
+
+            _logger.LogInformation("Returning {Count} sight responses", sightResponses.Count);
 
             return new SightsResponse
             {
@@ -83,6 +93,8 @@ namespace StoreBLL.Services
 
         public async Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default)
         {
+            _logger.LogInformation("Getting count");
+
             return await _sightRepository.GetCountAsync(country, yearOfFoundation, token);
         }
     }
