@@ -37,7 +37,7 @@ namespace StoreBLL.Services
 
             var sights = await _sightRepository.GetAllSightsWithCountry(cancellationToken);
 
-            var total = await _sightRepository.GetCountAsync(request.Country, request.YearOfFoundationFrom, cancellationToken);
+            var total = sights.Count();
             _logger.LogInformation("Fetched {Total} sights from the database", total);
 
             if (!string.IsNullOrWhiteSpace(request.Country))
