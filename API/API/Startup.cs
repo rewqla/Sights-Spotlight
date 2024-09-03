@@ -1,11 +1,13 @@
 ﻿using API.Authorization;
 using API.Health;
+using API.Middlewares;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using StoreBLL.Interfaces;
 using StoreBLL.Mappers;
 using StoreBLL.Middlewares;
@@ -143,6 +145,7 @@ namespace API
                 app.UseSwaggerUI();
             }
             app.UseMiddleware<ValidationMappingMiddleware>();
+            app.UseMiddleware<RequestLogContextMiddleware>();
 
             app.UseHttpsRedirection();
 
@@ -160,6 +163,8 @@ namespace API
             app.UseOutputCache();
 
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
 
             var scope = app.ApplicationServices.CreateScope();
             var serviceProvider = scope.ServiceProvider;
