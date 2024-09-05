@@ -6,6 +6,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StoreBLL.Interfaces;
+using StoreBLL.Mappers;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 using StoreDAL.Repository;
@@ -22,12 +23,10 @@ namespace StoreBLL.Services
     public class SightService : ISightService
     {
         private readonly ISightRepository _sightRepository;
-        private readonly IMapper _mapper; 
         private readonly ILogger<SightService> _logger;
-        public SightService(ISightRepository sightRepository, IMapper mapper, ILogger<SightService> logger)
+        public SightService(ISightRepository sightRepository, ILogger<SightService> logger)
         {
             _sightRepository = sightRepository;
-            _mapper = mapper;
             _logger = logger;
         }
 
@@ -81,6 +80,7 @@ namespace StoreBLL.Services
             }).ToList();
 
             _logger.LogInformation("Returning {Count} sight responses", sightResponses.Count);
+
 
             return new SightsResponse
             {

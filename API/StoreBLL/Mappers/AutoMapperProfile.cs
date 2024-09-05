@@ -17,17 +17,19 @@ namespace StoreBLL.Mappers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Country, CountryResponse>()
-                .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.MainImageURL));
-
             CreateMap<Country, CountryDetailsResponse>()
                    .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.SecondaryImageURL))
                    .ForMember(dest => dest.CountrySights, opt => opt.MapFrom(src => src.Sights));
-            CreateMap<Sight, CountrySightResponse>()
-                .ForMember(dest => dest.ImageURLs, opt => opt.MapFrom(src => src.SightPhotos.Select(p => p.Url)));
+          
 
             CreateMap<CreateCountryRequest, Country>();
             CreateMap<UpdateCountryRequest, Country>();
+
+
+            CreateMap<Sight, CountrySightResponse>()
+              .ForMember(dest => dest.ImageURLs, opt => opt.MapFrom(src => src.SightPhotos.Select(p => p.Url)));
+            CreateMap<Country, CountryResponse>()
+              .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.MainImageURL));
         }
     }
 }

@@ -16,7 +16,7 @@ Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "name": "polanduis",
+  "name": "polanduis3",
   "description": "Not bad as mad",
   "mainImageURL": "23",
   "secondaryImageURL": "2223"
@@ -29,13 +29,13 @@ Authorization:Bearer {{authToken}}
 
 {
   "id":18,
-  "name": "Italy3",
+  "name": "Italyyy",
   "description": "Not bad as mad2",
   "mainImageURL": "23",
   "secondaryImageURL": "2223"
 }
 
 ### Update the country
-DELETE  {{baseUrl}}/api/countries/12
+DELETE  {{baseUrl}}/api/countries/19
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
