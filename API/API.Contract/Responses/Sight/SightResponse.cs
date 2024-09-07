@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Responses.Sight
 {
-    public class SightResponse
+    public record SightResponse
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<string> Images { get; set; }
-        public string Country { get; set; }
-        public int? YearOfFoundation { get; set; }
-        public string Description { get; set; }
+        public required int Id { get; init; }
+        public required string Name { get; init; }
+        public required List<string> Images { get; init; } = new();
+        public required string Country { get; init; }
+        public int? YearOfFoundation { get; init; }
+        public required string Description { get; init; }
     }
 }

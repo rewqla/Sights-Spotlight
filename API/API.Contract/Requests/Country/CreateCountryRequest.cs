@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Requests.Country
 {
-    public class CreateCountryRequest
+    public record CreateCountryRequest
     {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public required string MainImageURL { get; set; }
-        public required string SecondaryImageURL { get; set; }
+        public required string Name { get; init; }
+        public required string Description { get; init; }
+        public required string MainImageURL { get; init; }
+        public required string SecondaryImageURL { get; init; }
     }
 }

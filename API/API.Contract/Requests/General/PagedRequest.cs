@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Requests.General
 {
-    public class PagedRequest
+    public record PagedRequest
     {
         public required int Page { get; init; } = 1;
 

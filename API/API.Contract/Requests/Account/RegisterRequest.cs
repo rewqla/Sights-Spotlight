@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Requests.Account
 {
-    public class RegisterRequest : LoginRequest
+    public record RegisterRequest : LoginRequest
     {
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
-        public required string Email { get; set; }
+        public required string FirstName { get; init; }
+        public required string LastName { get; init; }
+        public required string Email { get; init; }
     }
 }

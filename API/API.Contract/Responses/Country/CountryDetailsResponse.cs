@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Responses.Country
 {
-    public class CountryDetailsResponse : CountryResponse
+    public record CountryDetailsResponse : CountryResponse
     {
-        public required string Description { get; set; }
-        public List<CountrySightResponse> CountrySights { get; set; }
+        public required string Description { get; init; }
+        public List<CountrySightResponse> CountrySights { get; init; } = new();
     }
 }

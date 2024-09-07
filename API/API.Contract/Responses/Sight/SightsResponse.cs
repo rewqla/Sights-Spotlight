@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Responses.Sight
 {
-    public class SightsResponse : PagedResponse<SightResponse>
+    public record SightsResponse : PagedResponse<SightResponse>
     {
 
     }

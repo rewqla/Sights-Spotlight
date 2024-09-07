@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Responses
 {
-    public class PagedResponse<TResponse>
+    public record PagedResponse<TResponse>
     {
         public required IEnumerable<TResponse> Items { get; init; } = Enumerable.Empty<TResponse>();
 
@@ -18,5 +18,4 @@ namespace API.Contract.Responses
 
         public bool HasNextPage => Total > (Page * PageSize);
     }
-
 }

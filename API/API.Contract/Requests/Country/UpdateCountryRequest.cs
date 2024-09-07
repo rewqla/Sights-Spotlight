@@ -7,8 +7,8 @@ using API.Contract.Requests.Country;
 
 namespace API.Contract.Requests
 {
-    public class UpdateCountryRequest : CreateCountryRequest
+    public record UpdateCountryRequest : CreateCountryRequest
     {
-        public required int Id { get; set; }
+        public required int Id { get; init; }
     }
 }

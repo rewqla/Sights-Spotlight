@@ -32,10 +32,16 @@ namespace StoreBLL.Services
             return countries.Select(x => CountryMappingExtensions.MapToCountryResponse(x)).ToList();
         }
 
-        public async Task<CountryDetailsResponse> GetCountryDetailsById(int id, CancellationToken cancellationToken = default)
+        public async Task<CountryDetailsResponse?> GetCountryDetailsById(int id, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
             var country = await _countryRepository.GetCountryByIdWithSights(id);
+
+            if (country == null)
+            {
+                _logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
+                return null;
+            }
 
             return CountryMappingExtensions.MapToCountryDetailsResponse(country);
         }

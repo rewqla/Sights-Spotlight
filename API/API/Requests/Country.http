@@ -1,11 +1,11 @@
 
-@authToken=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI1NzI2NzQwfQ.w0b5XeHdx_yVFiHSU47W26OwCjFEeVzN4IGAHumYZvjdYeRrzW5ZHRwoLj7iLVbA2_6XQ9hmYMUYzlej-dkqUg
+@authToken=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI2MzM0NTI2fQ.Vi4lM5jo_dij1HUag4AyQWJ_3prHW42W3ZBo_pD6gijIUhiwoyCgr4TPb7ajFNS7-djrHKJmShdBlc3BB1Wvug
 ### Get all countries
 GET  {{baseUrl}}/api/countries
 Authorization: Bearer {{authToken}}
 
 ### Get country by Id use Apikey or Admin role
-GET  {{baseUrl}}/api/countries/15
+GET  {{baseUrl}}/api/countries/5
 x-api-key: ab813b98016e4cf181cb20b88f756f28
 Authorization: Bearer {{authToken}}
 
@@ -23,12 +23,12 @@ Authorization:Bearer {{authToken}}
 }
 
 ### Update the country
-Put  {{baseUrl}}/api/countries/18
+Put  {{baseUrl}}/api/countries/182
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "id":18,
+  "id":20,
   "name": "Italyyy",
   "description": "Not bad as mad2",
   "mainImageURL": "23",
@@ -36,6 +36,6 @@ Authorization:Bearer {{authToken}}
 }
 
 ### Update the country
-DELETE  {{baseUrl}}/api/countries/19
+DELETE  {{baseUrl}}/api/countries/20
 Content-Type: application/json
 Authorization:Bearer {{authToken}}

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Requests.Sight
 {
-    public class GetAllSightsRequest : PagedRequest
+    public record GetAllSightsRequest : PagedRequest
     {
-        public string? Country { get; set; }
-        public int? YearOfFoundationFrom { get; set; }
-        public int? YearOfFoundationTo { get; set; }
-        public string? SortBy { get; set; }
+        public string? Country { get; init; }
+        public int? YearOfFoundationFrom { get; init; }
+        public int? YearOfFoundationTo { get; init; }
+        public string? SortBy { get; init; }
     }
 }

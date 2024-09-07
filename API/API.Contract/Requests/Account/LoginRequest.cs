@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Requests.Account
 {
-    public class LoginRequest
+    public record LoginRequest
     {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
+        public required string Username { get; init; }
+        public required string Password { get; init; }
     }
 }

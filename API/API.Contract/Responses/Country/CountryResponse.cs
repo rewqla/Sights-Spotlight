@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Responses.Country
 {
-    public class CountryResponse
+    public record CountryResponse
     {
-        public required int Id { get; set; }
-        public required string Name { get; set; }
-        public required string ImageURL { get; set; }
+        public required int Id { get; init; }
+        public required string Name { get; init; }
+        public required string ImageURL { get; init; }
     }
 }

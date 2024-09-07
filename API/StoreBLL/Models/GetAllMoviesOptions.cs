@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StoreBLL.Models
 {
-    public class GetAllMoviesOptions
+    public record GetAllMoviesOptions
     {
-        public string? Country { get; set; }
-        public int? YearOfFoundationFrom { get; set; }
-        public int? YearOfFoundationTo { get; set; }
-        public string? SortField { get; set; }
+        public string? Country { get; init; }
+        public int? YearOfFoundationFrom { get; init; }
+        public int? YearOfFoundationTo { get; init; }
+        public string? SortField { get; init; }
     }
 }

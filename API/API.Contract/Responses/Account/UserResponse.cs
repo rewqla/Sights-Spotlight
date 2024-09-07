@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace API.Contract.Responses.Account
 {
-    public class UserResponse
+    public record UserResponse
     {
-        public required string Email { get; set; }
-        public required string Token { get; set; }
+        public required string Email { get; init; }
+        public required string Token { get; init; }
     }
 }
