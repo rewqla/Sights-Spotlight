@@ -2,7 +2,7 @@
 
 namespace StoreDAL.Entities
 {
-    public class Role : IdentityRole<int>
+    public sealed class Role : IdentityRole<int>
     {
 
     }

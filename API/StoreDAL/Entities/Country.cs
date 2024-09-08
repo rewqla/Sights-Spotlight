@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreDAL.Entities
 {
-    public class Country
+    public sealed class Country
     {
         public int Id { get; set; }
         public string Name { get; set; }

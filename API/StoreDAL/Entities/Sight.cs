@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StoreDAL.Entities
 {
-    public class Sight
+    public sealed class Sight
     {
         public int Id { get; set; }
         public string Name { get; set; }
