@@ -5,6 +5,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -159,14 +160,17 @@ using (var scope = app.Services.CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
     var context = serviceProvider.GetRequiredService<StoreContext>();
+    var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 
     try
     {
         await SeederDB.SeedData(serviceProvider);
+        logger.LogInformation("Seeding data to the db");
+        await context.Database.MigrateAsync();
+        logger.LogInformation("Migrating database");
     }
     catch (Exception ex)
     {
-        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "A problem occurred during migration");
     }
 }
