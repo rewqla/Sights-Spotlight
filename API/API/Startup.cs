@@ -2,10 +2,13 @@
 using API.Health;
 using API.Middlewares;
 using FluentValidation;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -117,8 +120,11 @@ builder.Services.AddOutputCache(x =>
         .Tag("sights"));
 });
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddHealthChecks()
-     .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
+     .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name)
+     .AddCheck<RemoteHealthCheck>("Remote endpoints Health Check", failureStatus: HealthStatus.Unhealthy);
 
 builder.Services.AddScoped<IValidator<Country>, CountryValidation>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
@@ -131,7 +137,6 @@ builder.Services.AddScoped<ApiKeyAuthFilter>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -176,6 +181,9 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapControllers();
-app.MapHealthChecks("/_health");
+app.MapHealthChecks("/_health", new HealthCheckOptions
+{
+    ResponseWriter=UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

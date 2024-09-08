@@ -24,6 +24,7 @@ namespace API.Health
             try
             {
                 await _storeContext.Database.ExecuteSqlRawAsync("SELECT 1", cancellationToken);
+                _logger.LogInformation("Database is healthy.");
                 return HealthCheckResult.Healthy();
             }
             catch (Exception e)
