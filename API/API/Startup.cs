@@ -5,9 +5,11 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Events;
 using StoreBLL.Interfaces;
 using StoreBLL.Mappers;
 using StoreBLL.Middlewares;
@@ -18,174 +20,158 @@ using StoreDAL.Interfaces;
 using StoreDAL.Repository;
 using System.Text;
 
-namespace API
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, loggerConfiguration) =>
 {
-    //add this class to use it in the CustomWebApplicationFactory
-    public class Startup
+    loggerConfiguration
+        .ReadFrom.Configuration(context.Configuration)
+        .WriteTo.Console();
+});
+
+var configuration = builder.Configuration;
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    var jwtSecurityScheme = new OpenApiSecurityScheme
     {
-        public Startup(IConfiguration configuration)
+        BearerFormat = "JWT",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Description = "Put Bearer [space] and then your token ",
+
+        Reference = new OpenApiReference
         {
-            Configuration = configuration;
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
         }
-        public IConfiguration Configuration { get; }
+    };
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddAutoMapper(typeof(AutoMapperProfile));
+    c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { jwtSecurityScheme, Array.Empty<string>() }
+    });
+});
 
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-            });
+builder.Services.AddDbContext<StoreContext>(opt =>
+{
+    opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+});
 
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(c =>
-            {
-                var jwtSecurityScheme = new OpenApiSecurityScheme
-                {
-                    BearerFormat = "JWT",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = JwtBearerDefaults.AuthenticationScheme,
-                    Description = "Put Bearer [space] and then your token ",
+builder.Services.AddIdentity<User, Role>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+}).AddEntityFrameworkStores<StoreContext>();
 
-                    Reference = new OpenApiReference
-                    {
-                        Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
-                };
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTSettings:TokenKey"]!))
+    };
+});
 
-                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(PolicyClaims.Admin,
+        p => p.AddRequirements(new AdminAuthRequirement(configuration["ApiKey"]!)));
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    { jwtSecurityScheme, Array.Empty<string>() }
-                });
-            });
+    options.AddPolicy(PolicyRoles.Member, policy =>
+          policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Member));
+    options.AddPolicy(PolicyRoles.Viewer, policy =>
+          policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Viewer));
+});
 
-            services.AddDbContext<StoreContext>(opt =>
-            {
-                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-            });
+builder.Services.AddOutputCache(x =>
+{
+    x.AddBasePolicy(c => c.Cache());
+    x.AddPolicy("SightCache", c =>
+        c.Cache()
+        .Expire(TimeSpan.FromMinutes(1))
+        .SetVaryByQuery(new[] { "country", "yearOfFoundationFrom", "YearOfFoundationTo", "page", "pageSize" })
+        .Tag("sights"));
+});
 
-            services.AddIdentity<User, Role>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-            }).AddEntityFrameworkStores<StoreContext>();
+builder.Services.AddHealthChecks()
+     .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTSettings:TokenKey"]!))
-                };
-            });
+builder.Services.AddScoped<IValidator<Country>, CountryValidation>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+builder.Services.AddScoped<ISightRepository, SightsRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<ISightService, SightService>();
+builder.Services.AddScoped<ApiKeyAuthFilter>();
 
-            services.AddAuthorization(options =>
-            {
-                //options.AddPolicy(PolicyRoles.Admin, policy =>
-                //    policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Admin));
-                options.AddPolicy(PolicyClaims.Admin,
-                    p => p.AddRequirements(new AdminAuthRequirement(Configuration["ApiKey"]!)));
+var app = builder.Build();
 
-                options.AddPolicy(PolicyRoles.Member, policy =>
-                      policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Member));
-                options.AddPolicy(PolicyRoles.Viewer, policy =>
-                      policy.RequireClaim(PolicyClaims.ClaimPath, PolicyClaims.Viewer));
-            });
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-            //services.AddResponseCaching();
-            services.AddOutputCache(x =>
-            {
-                x.AddBasePolicy(c => c.Cache());
-                x.AddPolicy("SightCache", c =>
-                    c.Cache()
-                    .Expire(TimeSpan.FromMinutes(1))
-                    .SetVaryByQuery(new[] { "country", "yearOfFoundationFrom", "YearOfFoundationTo", "page", "pageSize" })
-                    .Tag("sights"));
-            });
+app.UseMiddleware<ValidationMappingMiddleware>();
+app.UseMiddleware<RequestLogContextMiddleware>();
 
-            services.AddHealthChecks()
-                 .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name);
+app.UseHttpsRedirection();
+app.UseRouting();
 
-            services.AddScoped<IValidator<Country>, CountryValidation>();
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+});
 
-            services.AddScoped<ICountryRepository, CountryRepository>();
-            services.AddScoped<ISightRepository, SightsRepository>();
+app.UseAuthentication();
+app.UseAuthorization();
 
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<ISightService, SightService>();
+app.UseOutputCache();
 
-            services.AddScoped<ApiKeyAuthFilter>();
-        }
+app.UseStaticFiles();
+app.UseSerilogRequestLogging();
 
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Program> logger)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-            app.UseMiddleware<ValidationMappingMiddleware>();
-            app.UseMiddleware<RequestLogContextMiddleware>();
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var context = serviceProvider.GetRequiredService<StoreContext>();
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseCors(opt =>
-            {
-                opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
-            });
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            //app.UseResponseCaching();
-            app.UseOutputCache();
-
-            app.UseStaticFiles();
-
-            app.UseSerilogRequestLogging();
-
-            var scope = app.ApplicationServices.CreateScope();
-            var serviceProvider = scope.ServiceProvider;
-            var context = serviceProvider.GetRequiredService<StoreContext>();
-
-            try
-            {
-                await SeederDB.SeedData(serviceProvider);
-                //await context.Database.MigrateAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "A problem occurred during migration");
-            }
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-
-                endpoints.MapHealthChecks("/_health");
-            });
-        }
+    try
+    {
+        await SeederDB.SeedData(serviceProvider);
+    }
+    catch (Exception ex)
+    {
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "A problem occurred during migration");
     }
 }
+
+app.MapControllers();
+app.MapHealthChecks("/_health");
+
+app.Run();

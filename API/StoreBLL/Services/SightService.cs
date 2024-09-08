@@ -1,7 +1,6 @@
 ﻿using API.Contract.Requests;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Sight;
-using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
