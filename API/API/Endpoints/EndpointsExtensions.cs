@@ -1,4 +1,5 @@
-﻿using API.Endpoints.Country;
+﻿using API.Endpoints.Account;
+using API.Endpoints.Country;
 using API.Endpoints.Sights;
 
 namespace API.Endpoints;
@@ -8,6 +9,7 @@ public static class EndpointsExtensions
     {
         app.MapSightsEndpoints();
         app.MapCountryEndpoints();
+        app.MapAccountEndpoints();
 
         return app;
     }
