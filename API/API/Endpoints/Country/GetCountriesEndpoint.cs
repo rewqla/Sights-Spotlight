@@ -1,0 +1,32 @@
+using API.Contract.Requests.Sight;
+using API.Contract.Responses.Country;
+using API.Controllers;
+using API.Routes;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
+using StoreBLL.Interfaces;
+using StoreBLL.Services;
+
+namespace API.Endpoints.Country;
+public static class GetCountriesEndpoint
+{
+    public const string Name = "GetCountries";
+    public static IEndpointRouteBuilder MapGetCountries(this IEndpointRouteBuilder app)
+    {
+        app.MapGet(CountryRoutes.GetAll, async (ILoggerFactory loggerFactory,
+            ICountryService _countryService, CancellationToken cancellationToken) =>
+        {
+            var logger = loggerFactory.CreateLogger("GetCountriesEndpoint");
+            logger.LogInformation("Fetching all countries.");
+
+            var countries = await _countryService.GetAllCountries(cancellationToken);
+            logger.LogInformation("Fetched {Count} countries.", countries.Count());
+
+            return TypedResults.Ok(countries);
+        })
+            .WithName(Name);
+
+
+        return app;
+    }
+}

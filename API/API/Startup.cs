@@ -1,4 +1,5 @@
 ﻿using API.Authorization;
+using API.Endpoints;
 using API.Health;
 using API.Middlewares;
 using FluentValidation;
@@ -161,6 +162,8 @@ app.UseOutputCache();
 app.UseStaticFiles();
 app.UseSerilogRequestLogging();
 
+app.MapApiEndpoints();
+
 using (var scope = app.Services.CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
@@ -180,7 +183,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapControllers();
 app.MapHealthChecks("/_health", new HealthCheckOptions
 {
     ResponseWriter=UIResponseWriter.WriteHealthCheckUIResponse
