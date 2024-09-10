@@ -5,7 +5,7 @@ GET  {{baseUrl}}/api/countries
 Authorization: Bearer {{authToken}}
 
 ### Get country by Id use Apikey or Admin role
-GET  {{baseUrl}}/api/countries/5
+GET  {{baseUrl}}/api/countries/2
 x-api-key: ab813b98016e4cf181cb20b88f756f28
 Authorization: Bearer {{authToken}}
 
@@ -16,26 +16,26 @@ Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "name": "polanduis3",
+  "name": "polanduis313",
   "description": "Not bad as mad",
   "mainImageURL": "23",
   "secondaryImageURL": "2223"
 }
 
 ### Update the country
-Put  {{baseUrl}}/api/countries/182
+Put  {{baseUrl}}/api/countries/23
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "id":20,
+  "id":23,
   "name": "Italyyy",
   "description": "Not bad as mad2",
   "mainImageURL": "23",
   "secondaryImageURL": "2223"
 }
 
-### Update the country
-DELETE  {{baseUrl}}/api/countries/20
+### Delete the country
+DELETE  {{baseUrl}}/api/countries/23
 Content-Type: application/json
 Authorization:Bearer {{authToken}}

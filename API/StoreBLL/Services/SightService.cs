@@ -1,4 +1,5 @@
 ﻿using API.Contract.Requests;
+using API.Contract.Requests.General;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Sight;
 using FluentValidation;
@@ -64,8 +65,8 @@ namespace StoreBLL.Services
             _logger.LogInformation("Sorted sights by: {SortBy}", request.SortBy);
 
             sights = sights
-                .Skip((request.Page - 1) * request.PageSize)
-                .Take(request.PageSize);
+                .Skip((request.Page.GetValueOrDefault(PagedRequest.DefaultPage) - 1) * request.PageSize.GetValueOrDefault(PagedRequest.DefaultPageSize))
+                .Take(request.PageSize.GetValueOrDefault(PagedRequest.DefaultPageSize));
             _logger.LogInformation("Paginated sights to Page: {Page}, PageSize: {PageSize}", request.Page, request.PageSize);
 
             var sightResponses = sights.Select(sight => new SightResponse
@@ -84,8 +85,8 @@ namespace StoreBLL.Services
             return new SightsResponse
             {
                 Items = sightResponses,
-                Page = request.Page,
-                PageSize = request.PageSize,
+                Page = request.Page.GetValueOrDefault(PagedRequest.DefaultPage),
+                PageSize = request.PageSize.GetValueOrDefault(PagedRequest.DefaultPageSize),
                 Total = total
             };
         }
