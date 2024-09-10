@@ -10,7 +10,7 @@ public static class CreateCountryEndpoint
     public const string Name = "CreateCountry";
     public static IEndpointRouteBuilder MapCreateCountry(this IEndpointRouteBuilder app)
     {
-        app.MapPost(CountryRoutes.Create, async (CreateCountryRequest createCountry, ILogger<Program> logger,
+        app.MapPost(CountryEndpoints.Create, async (CreateCountryRequest createCountry, ILogger<Program> logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Creating a new country with name {CountryName}.", createCountry.Name);

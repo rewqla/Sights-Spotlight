@@ -4,8 +4,8 @@ public static class AccountEndpointExtension
     public static IEndpointRouteBuilder MapAccountEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapLogin();
-        //app.MapRegister();
-        //app.MapGetCurrent();
+        app.MapRegister();
+        app.MapCurrentUser();
 
         return app;
     }

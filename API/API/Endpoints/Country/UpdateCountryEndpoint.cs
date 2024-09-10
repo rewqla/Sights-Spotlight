@@ -2,7 +2,6 @@ using API.Authorization;
 using API.Contract.Requests;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Country;
-using API.Controllers;
 using API.Routes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -16,7 +15,7 @@ public static class UpdateCountryEndpoint
     public const string Name = "UpdateCountry";
     public static IEndpointRouteBuilder MapUpdateCountry(this IEndpointRouteBuilder app)
     {
-        app.MapPut(CountryRoutes.Update, async (UpdateCountryRequest updateCountry, ILogger < Program > logger,
+        app.MapPut(CountryEndpoints.Update, async (UpdateCountryRequest updateCountry, ILogger < Program > logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Updating country with ID {CountryId}.", updateCountry.Id);

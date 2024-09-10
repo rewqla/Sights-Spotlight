@@ -1,6 +1,6 @@
 ﻿namespace API.Routes
 {
-    public static class SightRoutes
+    public static class SightEndpoints
     {
         private const string BaseRoute = "api/sights";
 

@@ -1,7 +1,6 @@
 using API.Authorization;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Country;
-using API.Controllers;
 using API.Routes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -14,7 +13,7 @@ public static class DeleteCountryEndpoint
     public const string Name = "DeleteCountry";
     public static IEndpointRouteBuilder MapDeleteCountry(this IEndpointRouteBuilder app)
     {
-        app.MapDelete(CountryRoutes.Delete, async (int id, ILogger<Program> logger,
+        app.MapDelete(CountryEndpoints.Delete, async (int id, ILogger<Program> logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Deleting country with ID {CountryId}.", id);

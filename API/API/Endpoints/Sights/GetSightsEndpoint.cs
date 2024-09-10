@@ -1,5 +1,4 @@
 using API.Contract.Requests.Sight;
-using API.Controllers;
 using API.Routes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -11,7 +10,7 @@ public static class GetSightsEndpoint
     public const string Name = "GetSights";
     public static IEndpointRouteBuilder MapGetSights(this IEndpointRouteBuilder app)
     {
-        app.MapGet(SightRoutes.GetAll, async ([AsParameters] GetAllSightsRequest request, ILogger<Program> logger,
+        app.MapGet(SightEndpoints.GetAll, async ([AsParameters] GetAllSightsRequest request, ILogger<Program> logger,
             IOutputCacheStore _outputCacheStore, ISightService _sightsService, CancellationToken cancellationToken) =>
         {     
             logger.LogInformation("GetSights called with Country: {Country}, YearOfFoundationFrom: {YearOfFoundationFrom}, YearOfFoundationTo: {YearOfFoundationTo}, Page: {Page}, PageSize: {PageSize}",

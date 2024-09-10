@@ -1,7 +1,6 @@
 using API.Contract.Requests.Account;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Account;
-using API.Controllers;
 using API.Endpoints.Country;
 using API.Routes;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +16,7 @@ public static class LoginEndpoint
     public const string Name = "Login";
     public static IEndpointRouteBuilder MapLogin(this IEndpointRouteBuilder app)
     {
-        app.MapPost(AccountRoutes.Login, async (LoginRequest loginRequest, ILogger<Program> logger, UserManager<User> _userManager, ITokenService _tokenService) =>
+        app.MapPost(AccountEndpoints.Login, async (LoginRequest loginRequest, ILogger<Program> logger, UserManager<User> _userManager, ITokenService _tokenService) =>
         {
             logger.LogInformation("User attempting to log in: {Username}", loginRequest.Username);
 

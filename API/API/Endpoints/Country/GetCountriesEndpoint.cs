@@ -1,6 +1,5 @@
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Country;
-using API.Controllers;
 using API.Routes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -13,7 +12,7 @@ public static class GetCountriesEndpoint
     public const string Name = "GetCountries";
     public static IEndpointRouteBuilder MapGetCountries(this IEndpointRouteBuilder app)
     {
-        app.MapGet(CountryRoutes.GetAll, async (ILogger<Program> logger,
+        app.MapGet(CountryEndpoints.GetAll, async (ILogger<Program> logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Fetching all countries.");

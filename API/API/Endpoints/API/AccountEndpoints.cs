@@ -1,6 +1,6 @@
 ﻿namespace API.Routes
 {
-    public static class AccountRoutes
+    public static class AccountEndpoints
     {
         private const string BaseRoute = "api/accounts";
 

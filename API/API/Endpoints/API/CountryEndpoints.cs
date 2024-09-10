@@ -1,6 +1,6 @@
 ﻿namespace API.Routes
 {
-    public static class CountryRoutes
+    public static class CountryEndpoints
     {
         private const string BaseRoute = "api/countries";
 
