@@ -66,27 +66,27 @@ namespace API.Controllers
             };
         }
 
-        [HttpPost(AccountRoutes.Login)]
-        public async Task<ActionResult<UserResponse>> Login(LoginRequest loginRequest)
-        {
-            _logger.LogInformation("User attempting to log in: {Username}", loginRequest.Username);
+        //[HttpPost(AccountRoutes.Login)]
+        //public async Task<ActionResult<UserResponse>> Login(LoginRequest loginRequest)
+        //{
+        //    _logger.LogInformation("User attempting to log in: {Username}", loginRequest.Username);
 
-            var user = await _userManager.FindByNameAsync(loginRequest.Username);
+        //    var user = await _userManager.FindByNameAsync(loginRequest.Username);
 
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequest.Password))
-            {
-                _logger.LogWarning($"Login failed for {loginRequest.Username}: Invalid username or password");
-                return Unauthorized();
-            }
+        //    if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequest.Password))
+        //    {
+        //        _logger.LogWarning($"Login failed for {loginRequest.Username}: Invalid username or password");
+        //        return Unauthorized();
+        //    }
 
-            _logger.LogInformation($"User {loginRequest.Username} successfully logged in");
+        //    _logger.LogInformation($"User {loginRequest.Username} successfully logged in");
 
-            return new UserResponse
-            {
-                Email = user.Email,
-                Token = await _tokenService.GenerateToken(user),
-            };
-        }
+        //    return new UserResponse
+        //    {
+        //        Email = user.Email,
+        //        Token = await _tokenService.GenerateToken(user),
+        //    };
+        //}
 
         [Authorize]
         [HttpGet(AccountRoutes.CurrentUser)]

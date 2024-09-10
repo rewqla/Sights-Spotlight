@@ -13,10 +13,9 @@ public static class GetCountriesEndpoint
     public const string Name = "GetCountries";
     public static IEndpointRouteBuilder MapGetCountries(this IEndpointRouteBuilder app)
     {
-        app.MapGet(CountryRoutes.GetAll, async (ILoggerFactory loggerFactory,
+        app.MapGet(CountryRoutes.GetAll, async (ILogger<Program> logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
-            var logger = loggerFactory.CreateLogger("GetCountriesEndpoint");
             logger.LogInformation("Fetching all countries.");
 
             var countries = await _countryService.GetAllCountries(cancellationToken);

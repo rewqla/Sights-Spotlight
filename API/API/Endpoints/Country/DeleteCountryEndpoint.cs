@@ -14,11 +14,9 @@ public static class DeleteCountryEndpoint
     public const string Name = "DeleteCountry";
     public static IEndpointRouteBuilder MapDeleteCountry(this IEndpointRouteBuilder app)
     {
-        app.MapDelete(CountryRoutes.Delete, async (int id, ILoggerFactory loggerFactory,
+        app.MapDelete(CountryRoutes.Delete, async (int id, ILogger<Program> logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
-            var logger = loggerFactory.CreateLogger("DeleteCountryEndpoint");
-
             logger.LogInformation("Deleting country with ID {CountryId}.", id);
 
             var result = await _countryService.DeleteCountry(id, cancellationToken);

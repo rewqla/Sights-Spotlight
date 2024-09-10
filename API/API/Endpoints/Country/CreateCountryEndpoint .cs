@@ -1,6 +1,7 @@
 using API.Authorization;
 using API.Contract.Requests.Country;
 using API.Routes;
+using Microsoft.AspNetCore.Mvc;
 using StoreBLL.Interfaces;
 
 namespace API.Endpoints.Country;
@@ -9,10 +10,9 @@ public static class CreateCountryEndpoint
     public const string Name = "CreateCountry";
     public static IEndpointRouteBuilder MapCreateCountry(this IEndpointRouteBuilder app)
     {
-        app.MapPost(CountryRoutes.Create, async (CreateCountryRequest createCountry, ILoggerFactory loggerFactory,
+        app.MapPost(CountryRoutes.Create, async (CreateCountryRequest createCountry, ILogger<Program> logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
-            var logger = loggerFactory.CreateLogger("CreateCountryEndpoint");
             logger.LogInformation("Creating a new country with name {CountryName}.", createCountry.Name);
 
             int createdCountryId = await _countryService.CreateCountry(createCountry, cancellationToken);

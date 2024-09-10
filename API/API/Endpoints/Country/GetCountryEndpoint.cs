@@ -16,11 +16,10 @@ public static class GetCountryEndpoint
     public static IEndpointRouteBuilder MapGetCountry(this IEndpointRouteBuilder app)
     {
         app.MapGet(CountryRoutes.GetById, async (int id,
-             [FromServices]  LoggerFactory loggerFactory,
+             ILogger<Program> logger,
            [FromServices] ICountryService countryService,
             CancellationToken cancellationToken) =>
         {
-            var logger = loggerFactory.CreateLogger("GetCountryEndpoint");
             logger.LogInformation("Fetching details for country with ID {CountryId}.", id);
             var country = await countryService.GetCountryDetailsById(id, cancellationToken);
 

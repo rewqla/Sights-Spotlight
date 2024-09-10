@@ -16,10 +16,9 @@ public static class UpdateCountryEndpoint
     public const string Name = "UpdateCountry";
     public static IEndpointRouteBuilder MapUpdateCountry(this IEndpointRouteBuilder app)
     {
-        app.MapPut(CountryRoutes.Update, async (UpdateCountryRequest updateCountry, ILoggerFactory loggerFactory,
+        app.MapPut(CountryRoutes.Update, async (UpdateCountryRequest updateCountry, ILogger < Program > logger,
             ICountryService _countryService, CancellationToken cancellationToken) =>
         {
-            var logger = loggerFactory.CreateLogger("GetCountriesEndpoint");
             logger.LogInformation("Updating country with ID {CountryId}.", updateCountry.Id);
 
             var result = await _countryService.UpdateCountry(updateCountry, cancellationToken);

@@ -2,8 +2,10 @@ using API.Contract.Requests.Account;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Account;
 using API.Controllers;
+using API.Endpoints.Country;
 using API.Routes;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using StoreBLL.Interfaces;
 using StoreBLL.Services;
@@ -15,10 +17,8 @@ public static class LoginEndpoint
     public const string Name = "Login";
     public static IEndpointRouteBuilder MapLogin(this IEndpointRouteBuilder app)
     {
-        app.MapPost(AccountRoutes.Login, async (LoginRequest loginRequest, ILoggerFactory loggerFactory, UserManager<User> _userManager, ITokenService _tokenService) =>
+        app.MapPost(AccountRoutes.Login, async (LoginRequest loginRequest, ILogger<Program> logger, UserManager<User> _userManager, ITokenService _tokenService) =>
         {
-            var logger = loggerFactory.CreateLogger("LoginEndpoint");
-
             logger.LogInformation("User attempting to log in: {Username}", loginRequest.Username);
 
             var user = await _userManager.FindByNameAsync(loginRequest.Username);
