@@ -13,7 +13,7 @@ using StoreDAL.Entities;
 namespace API.Endpoints.Account;
 public static class LoginEndpoint
 {
-    public const string Name = "Login";
+    private const string Name = "Login";
     public static IEndpointRouteBuilder MapLogin(this IEndpointRouteBuilder app)
     {
         app.MapPost(AccountEndpoints.Login, async (LoginRequest loginRequest, ILogger<Program> logger, UserManager<User> _userManager, ITokenService _tokenService) =>
