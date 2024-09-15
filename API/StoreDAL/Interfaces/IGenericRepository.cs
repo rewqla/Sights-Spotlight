@@ -9,7 +9,7 @@ namespace StoreDAL.Interfaces
     public interface IGenericRepository<TEntity>
     {
         Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default);
-        Task<TEntity> FindById(int id, CancellationToken cancellationToken = default);
+        Task<TEntity?> FindById(int id, CancellationToken cancellationToken = default);
         Task Add(TEntity entity, CancellationToken cancellationToken = default);
         void Delete(TEntity entity);
         void Update(TEntity entity);

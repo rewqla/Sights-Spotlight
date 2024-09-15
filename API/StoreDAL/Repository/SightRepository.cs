@@ -10,20 +10,15 @@ using System.Threading.Tasks;
 
 namespace StoreDAL.Repository
 {
-    public class SightsRepository : GenericRepository<Sight>, ISightRepository
+    public class SightsRepository(StoreContext context) : GenericRepository<Sight>(context), ISightRepository
     {
-        private readonly DbSet<Sight> _sightDbSet;
-
-        public SightsRepository(StoreContext context) : base(context)
-        {
-            _sightDbSet = context.Set<Sight>();
-        }
+        private readonly DbSet<Sight> _sightDbSet = context.Set<Sight>();
 
         public async Task<IEnumerable<Sight>> GetAllSightsWithCountry(CancellationToken cancellationToken = default)
         {
             return await _sightDbSet
                 .Include(s => s.Country)
-                .Include(s => s.SightPhotos).ToListAsync();
+                .Include(s => s.SightPhotos).ToListAsync(cancellationToken);
         }
 
         public async Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default)

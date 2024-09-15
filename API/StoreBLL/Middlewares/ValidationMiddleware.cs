@@ -1,7 +1,5 @@
 ﻿using API.Contract.Responses;
-using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace StoreBLL.Middlewares

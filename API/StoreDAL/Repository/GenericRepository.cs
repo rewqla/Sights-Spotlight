@@ -15,7 +15,7 @@ namespace StoreDAL.Repository
         private readonly DbSet<TEntity> _dbSet;
         private bool _disposed = false;
 
-        public GenericRepository(StoreContext context)
+        protected GenericRepository(StoreContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
@@ -24,7 +24,7 @@ namespace StoreDAL.Repository
         {
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
-        public async Task<TEntity> FindById(int id, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> FindById(int id, CancellationToken cancellationToken = default)
         {
             return await _dbSet.FindAsync(id, cancellationToken);
         }

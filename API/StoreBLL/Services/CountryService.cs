@@ -7,62 +7,58 @@ using StoreBLL.Interfaces;
 using StoreBLL.Mappers;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
-using System.Diagnostics.Metrics;
 
 namespace StoreBLL.Services
 {
-    public class CountryService : ICountryService
+    public class CountryService(
+        ICountryRepository countryRepository,
+        IValidator<Country> countryValidator,
+        ILogger<CountryService> logger)
+        : ICountryService
     {
-        private readonly ICountryRepository _countryRepository;
-        private readonly IValidator<Country> _countryValidator;
-        private readonly ILogger<CountryService> _logger;
-        public CountryService(ICountryRepository countryRepository, IValidator<Country> countryValidator, ILogger<CountryService> logger = null)
-        {
-            _countryRepository = countryRepository;
-            _countryValidator = countryValidator;
-            _logger = logger;
-        }
-
         public async Task<IEnumerable<CountryResponse>> GetAllCountries(CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Retrieving all countries from the repository.");
-            var countries = await _countryRepository.GetAll();
+            logger.LogInformation("Retrieving all countries from the repository.");
+            var countries = await countryRepository.GetAll(cancellationToken);
 
             return countries.Select(x => CountryMappingExtensions.MapToCountryResponse(x)).ToList();
         }
 
-        public async Task<CountryDetailsResponse?> GetCountryDetailsById(int id, CancellationToken cancellationToken = default)
+        public async Task<CountryDetailsResponse?> GetCountryDetailsById(int id,
+            CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
-            var country = await _countryRepository.GetCountryByIdWithSights(id);
+            logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
+            var country = await countryRepository.GetCountryByIdWithSights(id, cancellationToken);
 
             if (country == null)
             {
-                _logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
+                logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
                 return null;
             }
 
             return CountryMappingExtensions.MapToCountryDetailsResponse(country);
         }
 
-        public async Task<int> CreateCountry(CreateCountryRequest createCountry, CancellationToken cancellationToken = default)
+        public async Task<int> CreateCountry(CreateCountryRequest createCountry,
+            CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Creating a new country with name {CountryName}.", createCountry.Name);
+            logger.LogInformation("Creating a new country with name {CountryName}.", createCountry.Name);
 
             var country = CountryMappingExtensions.MapToCountry(createCountry);
-            await _countryValidator.ValidateAndThrowAsync(country);
+            await countryValidator.ValidateAndThrowAsync(country, cancellationToken);
 
-            await _countryRepository.Add(country);
-            await _countryRepository.Complete();
+            await countryRepository.Add(country!, cancellationToken);
+            await countryRepository.Complete();
 
             return country.Id;
         }
 
-        public async Task<bool> UpdateCountry(UpdateCountryRequest updateCountry, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateCountry(UpdateCountryRequest updateCountry,
+            CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Updating country with ID {CountryId}.", updateCountry.Id);
+            logger.LogInformation("Updating country with ID {CountryId}.", updateCountry.Id);
 
-            var country = await _countryRepository.FindById(updateCountry.Id);
+            var country = await countryRepository.FindById(updateCountry.Id, cancellationToken);
 
             if (country == null)
             {
@@ -71,27 +67,27 @@ namespace StoreBLL.Services
 
             CountryMappingExtensions.UpdateCountryFromRequest(country, updateCountry);
 
-            await _countryValidator.ValidateAndThrowAsync(country);
+            await countryValidator.ValidateAndThrowAsync(country, cancellationToken);
 
-            _countryRepository.Update(country);
-            await _countryRepository.Complete();
+            countryRepository.Update(country);
+            await countryRepository.Complete();
 
             return true;
         }
 
         public async Task<bool> DeleteCountry(int id, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Deleting country with ID {CountryId}.", id);
+            logger.LogInformation("Deleting country with ID {CountryId}.", id);
 
-            var country = await _countryRepository.FindById(id);
+            var country = await countryRepository.FindById(id, cancellationToken);
 
             if (country == null)
             {
                 return false;
             }
 
-            _countryRepository.Delete(country);
-            await _countryRepository.Complete();
+            countryRepository.Delete(country);
+            await countryRepository.Complete();
 
             return true;
         }

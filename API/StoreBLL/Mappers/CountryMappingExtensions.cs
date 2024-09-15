@@ -2,12 +2,6 @@
 using API.Contract.Requests.Country;
 using API.Contract.Responses.Country;
 using StoreDAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StoreBLL.Mappers
 {
@@ -34,7 +28,7 @@ namespace StoreBLL.Mappers
             };
         }
 
-        public static CountrySightResponse MapToCountrySightResponse(Sight sight)
+        private static CountrySightResponse MapToCountrySightResponse(Sight sight)
         {
             return new CountrySightResponse
             {

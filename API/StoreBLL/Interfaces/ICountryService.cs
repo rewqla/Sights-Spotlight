@@ -1,11 +1,6 @@
 ﻿using API.Contract.Requests;
 using API.Contract.Requests.Country;
 using API.Contract.Responses.Country;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StoreBLL.Interfaces
 {

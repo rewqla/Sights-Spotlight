@@ -13,19 +13,19 @@ Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "name": "polanduis313",
+  "name": "polanduis3113",
   "description": "Not bad as mad",
   "mainImageURL": "23",
   "secondaryImageURL": "2223"
 }
 
 ### Update the country
-Put  {{baseUrl}}/api/countries/23
+PUT  {{baseUrl}}/api/countries/25
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "id":23,
+  "id":25,
   "name": "Italyyy",
   "description": "Not bad as mad2",
   "mainImageURL": "23",
@@ -33,6 +33,6 @@ Authorization:Bearer {{authToken}}
 }
 
 ### Delete the country
-DELETE  {{baseUrl}}/api/countries/23
+DELETE  {{baseUrl}}/api/countries/25
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
