@@ -1,7 +1,9 @@
 import { test, expect, describe } from "bun:test";
+import { LoginService } from "../../services/loginService";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 const baseUrl = "https://localhost:7188";
+const loginService = new LoginService(baseUrl);
 
 describe("Login Endpoint Tests", () => {
   test("POST /api/accounts/login - Successful login with valid credentials", async () => {
@@ -11,25 +13,17 @@ describe("Login Endpoint Tests", () => {
       password: "12345678",
     };
 
-    const endpoint = `${baseUrl}/api/accounts/login`;
-
     // Act
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    });
+    const response = await loginService.login(loginData);
 
     // Assert
     expect(response.status).toBe(200);
 
-    const data = await response.json();
+    console.log(response);
 
-    expect(data).toHaveProperty("email");
-    expect(data).toHaveProperty("token");
-    expect(typeof data.token).toBe("string");
+    expect(response.body).toHaveProperty("email");
+    expect(response.body).toHaveProperty("token");
+    expect(typeof response.body?.token).not.toBeEmpty();
   });
 
   test("POST /api/accounts/login - Invalid login with wrong credentials", async () => {
@@ -39,16 +33,8 @@ describe("Login Endpoint Tests", () => {
       password: "invalidPassword",
     };
 
-    const endpoint = `${baseUrl}/api/accounts/login`;
-
     // Act
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    });
+    const response = await loginService.login(loginData);
 
     // Assert
     expect(response.status).toBe(401);
@@ -61,16 +47,8 @@ describe("Login Endpoint Tests", () => {
       password: "validPassword",
     };
 
-    const endpoint = `${baseUrl}/api/accounts/login`;
-
     // Act
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    });
+    const response = await loginService.login(loginData);
 
     // Assert
     expect(response.status).toBe(401);
@@ -83,16 +61,8 @@ describe("Login Endpoint Tests", () => {
       password: "",
     };
 
-    const endpoint = `${baseUrl}/api/accounts/login`;
-
     // Act
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    });
+    const response = await loginService.login(loginData);
 
     // Assert
     expect(response.status).toBe(401);
