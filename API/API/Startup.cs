@@ -24,6 +24,7 @@ using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 using StoreDAL.Repository;
 using System.Text;
+using StoreBLL.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 

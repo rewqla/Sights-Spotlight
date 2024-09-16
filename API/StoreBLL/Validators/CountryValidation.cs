@@ -2,6 +2,8 @@
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 
+namespace StoreBLL.Validators;
+
 public class CountryValidation : AbstractValidator<Country>
 {
     private readonly ICountryRepository _countryRepository;
@@ -15,9 +17,9 @@ public class CountryValidation : AbstractValidator<Country>
             .WithMessage("The name must be greater than 3");
 
         RuleFor(x => x)
-               .MustAsync(ValidateName)
-               .WithName("Name")
-               .WithMessage("Name is not unique");
+            .MustAsync(ValidateName)
+            .WithName("Name")
+            .WithMessage("Name is not unique");
 
         RuleFor(x => x.MainImageURL)
             .NotEmpty()

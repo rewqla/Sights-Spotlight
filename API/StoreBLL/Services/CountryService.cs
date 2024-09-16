@@ -3,6 +3,7 @@ using API.Contract.Requests.Country;
 using API.Contract.Responses.Country;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using StoreBLL.Exceptions;
 using StoreBLL.Interfaces;
 using StoreBLL.Mappers;
 using StoreDAL.Entities;
@@ -21,6 +22,12 @@ namespace StoreBLL.Services
             logger.LogInformation("Retrieving all countries from the repository.");
             var countries = await countryRepository.GetAll(cancellationToken);
 
+            if (!countries.Any())
+            {
+                logger.LogWarning("No countries found in repository.");
+                throw new CountryException("No countries found.");
+            }
+            
             return countries.Select(x => CountryMappingExtensions.MapToCountryResponse(x)).ToList();
         }
 
@@ -33,7 +40,7 @@ namespace StoreBLL.Services
             if (country == null)
             {
                 logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
-                return null;
+                throw new CountryNotFoundException(id);
             }
 
             return CountryMappingExtensions.MapToCountryDetailsResponse(country);
@@ -42,11 +49,18 @@ namespace StoreBLL.Services
         public async Task<int> CreateCountry(CreateCountryRequest createCountry,
             CancellationToken cancellationToken = default)
         {
+            
             logger.LogInformation("Creating a new country with name {CountryName}.", createCountry.Name);
 
             var country = CountryMappingExtensions.MapToCountry(createCountry);
-            await countryValidator.ValidateAndThrowAsync(country, cancellationToken);
-
+            
+            var validationResult = await countryValidator.ValidateAsync(country, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                logger.LogWarning("Country validation failed for name {CountryName}.", createCountry.Name);
+                throw new CountryCreationException("Country validation failed.");
+            }
+            
             await countryRepository.Add(country!, cancellationToken);
             await countryRepository.Complete();
 
@@ -62,7 +76,8 @@ namespace StoreBLL.Services
 
             if (country == null)
             {
-                return false;
+                logger.LogWarning("Country with ID {CountryId} not found.", updateCountry.Id);
+                throw new CountryNotFoundException(updateCountry.Id);
             }
 
             CountryMappingExtensions.UpdateCountryFromRequest(country, updateCountry);
@@ -83,7 +98,8 @@ namespace StoreBLL.Services
 
             if (country == null)
             {
-                return false;
+                logger.LogWarning("Country with ID {CountryId} not found.", id);
+                throw new CountryNotFoundException(id);
             }
 
             countryRepository.Delete(country);
