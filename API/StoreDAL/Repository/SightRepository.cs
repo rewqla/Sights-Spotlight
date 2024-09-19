@@ -18,7 +18,9 @@ namespace StoreDAL.Repository
         {
             return await _sightDbSet
                 .Include(s => s.Country)
-                .Include(s => s.SightPhotos).ToListAsync(cancellationToken);
+                .Include(s => s.SightPhotos)
+                .AsSplitQuery()
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<int> GetCountAsync(string? country, int? yearOfFoundation, CancellationToken token = default)
