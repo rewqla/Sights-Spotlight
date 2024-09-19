@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace StoreDAL.Entities
 {
-    public sealed class Country
+    public sealed class Country : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string MainImageURL { get; set; }

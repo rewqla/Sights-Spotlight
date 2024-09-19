@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace StoreDAL.Entities
 {
-    public sealed class SightPhoto
+    public sealed class SightPhoto : BaseEntity
     {
-        public int Id { get; set; }
         public string Url { get; set; }
         public int SightId { get; set; }
         public Sight Sight { get; set; }

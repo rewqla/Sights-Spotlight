@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace StoreDAL.Entities
 {
-    public sealed class Sight
+    public sealed class Sight : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int CountryId { get; set; }

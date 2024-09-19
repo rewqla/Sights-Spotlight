@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StoreDAL.Entities;
 
 namespace StoreDAL.Repository
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly StoreContext _context;
         private readonly DbSet<TEntity> _dbSet;
@@ -20,14 +21,17 @@ namespace StoreDAL.Repository
             _context = context;
             _dbSet = context.Set<TEntity>();
         }
+
         public async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
         {
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
+
         public async Task<TEntity?> FindById(int id, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.FindAsync(id, cancellationToken);
+            return await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
+
         public async Task Add(TEntity entity, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddAsync(entity, cancellationToken);
@@ -56,6 +60,7 @@ namespace StoreDAL.Repository
                 {
                     _context.Dispose();
                 }
+
                 _disposed = true;
             }
         }
