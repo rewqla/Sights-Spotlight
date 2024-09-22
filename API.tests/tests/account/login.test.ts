@@ -5,8 +5,8 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 const baseUrl = "https://localhost:7188";
 const loginService = new LoginService(baseUrl);
 
-describe("Login Endpoint Tests", () => {
-  test("POST /api/accounts/login - Successful login with valid credentials", async () => {
+describe("POST /api/accounts/login", () => {
+  test("Should successfully login with valid credentials", async () => {
     // Arrange
     const loginData = {
       username: "admin",
@@ -26,7 +26,7 @@ describe("Login Endpoint Tests", () => {
     expect(typeof response.body?.token).not.toBeEmpty();
   });
 
-  test("POST /api/accounts/login - Invalid login with wrong credentials", async () => {
+  test("Should return 401 for invalid login credentials", async () => {
     // Arrange
     const loginData = {
       username: "invalidUser",
@@ -40,7 +40,7 @@ describe("Login Endpoint Tests", () => {
     expect(response.status).toBe(401);
   });
 
-  test("POST /api/accounts/login - Login fails with missing username", async () => {
+  test("Should return 401 when login fails due to missing username", async () => {
     // Arrange
     const loginData = {
       username: "",
@@ -54,7 +54,7 @@ describe("Login Endpoint Tests", () => {
     expect(response.status).toBe(401);
   });
 
-  test("POST /api/accounts/login - Login fails with missing password", async () => {
+  test("Should return 401 when login fails due to missing password", async () => {
     // Arrange
     const loginData = {
       username: "validUser",
