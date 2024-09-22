@@ -1,11 +1,13 @@
-import { test, expect, describe } from "bun:test";
+import { test, expect, describe, beforeAll } from "bun:test";
 import { CountryService } from "../../services/countryService";
+import { LoginService } from "../../services/loginService";
+import { setupCountryService } from "../testSetup";
 
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
-const baseUrl = "https://localhost:7188";
-const authToken =
-  "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI3NTQ4NTM3fQ.ojDtuOhNzM3JKFIQS9oEQV3V15O7q1di_TIk_9RcOQSi3zsZpHeDC4uqkB2B1gaMSas_-o3t3RwYbuedlMoSrg";
-const countryService = new CountryService(baseUrl, authToken);
+let countryService: CountryService;
+
+beforeAll(async () => {
+  countryService = await setupCountryService();
+});
 
 describe("GET /api/countries/{id}", () => {
   test("Should return 401 for unauthorized request without token", async () => {
