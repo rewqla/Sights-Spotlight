@@ -60,12 +60,7 @@ namespace StoreBLL.Services
 
             var country = CountryMappingExtensions.MapToCountry(createCountry);
 
-            var validationResult = await countryValidator.ValidateAsync(country, cancellationToken);
-            if (!validationResult.IsValid)
-            {
-                logger.LogWarning("Country validation failed for name {CountryName}.", createCountry.Name);
-                throw new CountryCreationException("Country validation failed.");
-            }
+           await countryValidator.ValidateAndThrowAsync(country, cancellationToken);
 
             await countryRepository.Add(country!, cancellationToken);
             await countryRepository.Complete();
