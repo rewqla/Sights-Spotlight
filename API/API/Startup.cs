@@ -70,7 +70,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+        var auditEntries = new List<AuditEntry>(); 
+
+        opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+            .AddInterceptors(new AuditInterceptor(auditEntries));
 });
 
 builder.Services.AddIdentity<User, Role>(options =>
@@ -135,6 +138,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ISightService, SightService>();
 builder.Services.AddScoped<ApiKeyAuthFilter>();
+
+builder.Services.AddKeyedScoped<List<AuditEntry>>("Audit");
 
 var app = builder.Build();
 
