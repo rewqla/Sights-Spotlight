@@ -131,8 +131,12 @@ namespace StoreDAL.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime>("EndTimeUTC")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("ErrorMessage")
                         .IsRequired()
@@ -142,11 +146,15 @@ namespace StoreDAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime>("StartTimeUTC")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Succeed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("TrailType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

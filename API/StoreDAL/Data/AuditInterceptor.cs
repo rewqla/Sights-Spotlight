@@ -30,8 +30,10 @@ public class AuditInterceptor : SaveChangesInterceptor
             .Select(x => new AuditEntry
             {
                 Id = Guid.NewGuid(),
-                StartTime = startTime,
-                Metadata = x.DebugView.LongView
+                StartTimeUTC = startTime,
+                Metadata = x.DebugView.LongView,
+                TrailType = GetTrailType(x.State),
+                EntityName = x.Entity.GetType().Name,
             }).ToList();
         
         if (auditEntries.Count==0)
@@ -54,7 +56,7 @@ public class AuditInterceptor : SaveChangesInterceptor
 
         foreach (var auditEntry in _auditEntries)
         {
-            auditEntry.EndTime = endTime;
+            auditEntry.EndTimeUTC = endTime;
             auditEntry.Succeed = true;
         }
 
@@ -79,7 +81,7 @@ public class AuditInterceptor : SaveChangesInterceptor
 
         foreach (var auditEntry in _auditEntries)
         {
-            auditEntry.EndTime = endTime;
+            auditEntry.EndTimeUTC = endTime;
             auditEntry.Succeed = false;
             auditEntry.ErrorMessage = eventData.Exception.Message;
         }
@@ -90,5 +92,15 @@ public class AuditInterceptor : SaveChangesInterceptor
             _auditEntries.Clear();
             await eventData.Context.SaveChangesAsync();
         }
+    }
+    private string GetTrailType(EntityState state)
+    {
+        return state switch
+        {
+            EntityState.Added => "Create",
+            EntityState.Modified => "Update",
+            EntityState.Deleted => "Delete",
+            _ => "Unknown"
+        };
     }
 }
