@@ -30,4 +30,28 @@ export class CountryService {
       throw error;
     }
   }
+
+  async getCountryById(
+    countryId: number,
+    useToken = false
+  ): Promise<HttpResponse<any[]>> {
+    const endpoint = `/api/countries/${countryId}`;
+
+    const customHeaders: Record<string, string> = {};
+    if (useToken) {
+      customHeaders["Authorization"] = `Bearer ${this.authToken}`;
+    }
+
+    try {
+      const response = await this.httpService.get<any[]>(
+        endpoint,
+        customHeaders
+      );
+
+      return response!;
+    } catch (error: any) {
+      console.error("Failed to fetch countries:", error.message);
+      throw error;
+    }
+  }
 }

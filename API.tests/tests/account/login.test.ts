@@ -19,7 +19,7 @@ describe("Login Endpoint Tests", () => {
     // Assert
     expect(response.status).toBe(200);
 
-    console.log(response);
+    // console.log(response);
 
     expect(response.body).toHaveProperty("email");
     expect(response.body).toHaveProperty("token");

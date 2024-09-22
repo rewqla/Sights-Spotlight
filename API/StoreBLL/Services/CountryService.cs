@@ -27,40 +27,46 @@ namespace StoreBLL.Services
                 logger.LogWarning("No countries found in repository.");
                 throw new CountryException("No countries found.");
             }
-            
+
             return countries.Select(x => CountryMappingExtensions.MapToCountryResponse(x)).ToList();
         }
 
         public async Task<CountryDetailsResponse?> GetCountryDetailsById(int id,
             CancellationToken cancellationToken = default)
         {
-            logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
-            var country = await countryRepository.GetCountryByIdWithSights(id, cancellationToken);
-
-            if (country == null)
+            try
             {
-                logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
-                throw new CountryNotFoundException(id);
-            }
+                logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
+                var country = await countryRepository.GetCountryByIdWithSights(id, cancellationToken);
 
-            return CountryMappingExtensions.MapToCountryDetailsResponse(country);
+                if (country == null)
+                {
+                    logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
+                    throw new CountryNotFoundException(id);
+                }
+
+                return CountryMappingExtensions.MapToCountryDetailsResponse(country);
+            }
+            catch (CountryNotFoundException ex)
+            {
+                return null;
+            }
         }
 
         public async Task<int> CreateCountry(CreateCountryRequest createCountry,
             CancellationToken cancellationToken = default)
         {
-            
             logger.LogInformation("Creating a new country with name {CountryName}.", createCountry.Name);
 
             var country = CountryMappingExtensions.MapToCountry(createCountry);
-            
+
             var validationResult = await countryValidator.ValidateAsync(country, cancellationToken);
             if (!validationResult.IsValid)
             {
                 logger.LogWarning("Country validation failed for name {CountryName}.", createCountry.Name);
                 throw new CountryCreationException("Country validation failed.");
             }
-            
+
             await countryRepository.Add(country!, cancellationToken);
             await countryRepository.Complete();
 
