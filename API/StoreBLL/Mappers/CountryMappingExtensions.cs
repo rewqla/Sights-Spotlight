@@ -1,6 +1,7 @@
 ﻿using API.Contract.Requests;
 using API.Contract.Requests.Country;
 using API.Contract.Responses.Country;
+using StoreBLL.Exceptions;
 using StoreDAL.Entities;
 
 namespace StoreBLL.Mappers
@@ -14,6 +15,7 @@ namespace StoreBLL.Mappers
                 Id = country.Id,
                 Name = country.Name,
                 ImageURL = country.MainImageURL,
+                Continent = country.Continent.ToString(),
             };
         }
         public static CountryDetailsResponse MapToCountryDetailsResponse(Country country)
@@ -24,6 +26,7 @@ namespace StoreBLL.Mappers
                 Name = country.Name,
                 ImageURL = country.MainImageURL,
                 Description = country.Description,
+                Continent = country.Continent.ToString(),
                 CountrySights = country.Sights.Select(MapToCountrySightResponse).ToList()
             };
         }
@@ -45,17 +48,31 @@ namespace StoreBLL.Mappers
             existingCountry.Description = updateCountryRequest.Description;
             existingCountry.MainImageURL = updateCountryRequest.MainImageURL;
             existingCountry.SecondaryImageURL = updateCountryRequest.SecondaryImageURL;
+            
+            if (!Enum.TryParse<Continent>(updateCountryRequest.Continent, true, out var continentEnum))
+            {
+                throw new CountryModificationException($"Invalid continent value: {updateCountryRequest.Continent}");
+            }
+    
+            existingCountry.Continent = continentEnum; 
+            
             existingCountry.Sights = new List<Sight>();
         }
 
         public static Country MapToCountry(CreateCountryRequest createCountryRequest)
         {
+            if (!Enum.TryParse<Continent>(createCountryRequest.Continent, true, out var continentEnum))
+            {
+                throw new CountryModificationException($"Invalid continent value: {createCountryRequest.Continent}");
+            }
+            
             return new Country
             {
                 Name = createCountryRequest.Name,
                 Description = createCountryRequest.Description,
                 MainImageURL = createCountryRequest.MainImageURL,
                 SecondaryImageURL = createCountryRequest.SecondaryImageURL,
+                Continent = continentEnum,
                 Sights = new List<Sight>()
             };
         }

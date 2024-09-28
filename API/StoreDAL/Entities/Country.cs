@@ -13,5 +13,6 @@ namespace StoreDAL.Entities
         public string MainImageURL { get; set; }
         public string SecondaryImageURL { get; set; }
         public IList<Sight> Sights { get; set; }
+        public Continent Continent { get; set; }
     }
 }

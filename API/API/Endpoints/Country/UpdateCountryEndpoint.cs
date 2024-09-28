@@ -1,5 +1,6 @@
 using API.Authorization;
 using API.Contract.Requests;
+using API.Contract.Requests.Country;
 using API.Contract.Requests.Sight;
 using API.Contract.Responses.Country;
 using API.Routes;

@@ -19,5 +19,14 @@ namespace StoreDAL.Data
         public DbSet<Sight> Sights { get; set; }
         public DbSet<SightPhoto> SightPhotos { get; set; }
         public DbSet<AuditEntry> AuditEntries { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Country>()
+                .Property(e => e.Continent)
+                .HasConversion<int>();
+        }
     }
 }
