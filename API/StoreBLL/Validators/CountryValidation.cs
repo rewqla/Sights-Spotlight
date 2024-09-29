@@ -23,8 +23,14 @@ public class CountryValidation : AbstractValidator<Country>
 
         RuleFor(x => x.MainImageURL)
             .NotEmpty()
-            .WithMessage("The MainImageURL must be not empty"); ;
+            .WithMessage("The MainImageURL must be not empty");
+        ;
+
+        RuleFor(x => x.Continent)
+            .NotEmpty()
+            .WithMessage("The Continent must be not empty");
     }
+
 
     private async Task<bool> ValidateName(Country country, CancellationToken cancellationToken)
     {
