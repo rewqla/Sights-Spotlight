@@ -60,7 +60,12 @@ namespace StoreBLL.Services
 
             var country = CountryMappingExtensions.MapToCountry(createCountry);
 
-           await countryValidator.ValidateAndThrowAsync(country, cancellationToken);
+            await countryValidator.ValidateAndThrowAsync(country, cancellationToken);
+
+            if (country.Continent == Continent.Antarctica)
+            {
+                logger.LogWarning("No body lives in Antarctica, there are no sights to register.");
+            }
 
             await countryRepository.Add(country!, cancellationToken);
             await countryRepository.Complete();

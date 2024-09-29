@@ -1,5 +1,5 @@
 
-@authToken=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI4MTM1MzI0fQ.WA5uUGSFDGuoJ1zCy5uDjGDNT8XkgTTx59i6Ea9v7ZCudCnmtvIgh2O3qJaJw7rGndNwGGubXgbqnEGmIvCmzg
+@authToken=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiZXhwIjoxNzI4MjMwODk5fQ.jsLHQbAxG6KhJZitTicIlZ2nqBvL2NAI0gLcn74_1PVZ1VXm-K8m5rrwHUnSz-uLIEY02UX6e37sVHBQW6G7Lg
 ### Get all countries
 GET  {{baseUrl}}/api/countries
 
@@ -13,11 +13,11 @@ Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "name": "iii2 love p2oland223",
+  "name": "Serbian2",
   "description": "Not bad as mad",
   "mainImageURL": "23",
   "secondaryImageURL": "2223",
-  "continent": "Europe"
+  "continent": "Antarctica"
 }
 
 ### Update the country
