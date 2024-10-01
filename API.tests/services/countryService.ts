@@ -54,4 +54,29 @@ export class CountryService {
       throw error;
     }
   }
+
+  async createCountry(
+    countryData: object,
+    useToken = false
+  ): Promise<HttpResponse<any>> {
+    const endpoint = `/api/countries`;
+
+    const customHeaders: Record<string, string> = {};
+    customHeaders["Content-Type"] = `application/json`;
+    if (useToken) {
+      customHeaders["Authorization"] = `Bearer ${this.authToken}`;
+    }
+
+    try {
+      const response = await this.httpService.post<any>(
+        endpoint,
+        countryData,
+        customHeaders
+      );
+      return response!;
+    } catch (error: any) {
+      console.error("Failed to create country:", error.message);
+      throw error;
+    }
+  }
 }
