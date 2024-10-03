@@ -13,11 +13,11 @@ Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "name": "Serbian2",
+  "name": "Ser6bian25",
   "description": "Not bad as mad",
   "mainImageURL": "23",
   "secondaryImageURL": "2223",
-  "continent": "Antarctica"
+  "continent": "467"
 }
 
 ### Update the country

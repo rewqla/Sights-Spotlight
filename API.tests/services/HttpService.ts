@@ -61,11 +61,10 @@ export class HttpService {
       let responseBody: T | null = null;
 
       if (response.status !== 204) {
-        responseBody = await response.json();
-      }
-
-      if (response.status == 500) {
-        throw new Error(`Internal error - ${response.statusText}`);
+        const contentType = response.headers.get("Content-Type") || "";
+        if (contentType.includes("application/json")) {
+          responseBody = await response.json(); // Only parse if content type is JSON
+        }
       }
 
       return {
