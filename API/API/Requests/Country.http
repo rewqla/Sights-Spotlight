@@ -21,12 +21,12 @@ Authorization:Bearer {{authToken}}
 }
 
 ### Update the country
-PUT  {{baseUrl}}/api/countries/35
+PUT  {{baseUrl}}/api/countries/35222
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "id":35,
+  "id":325,
   "name": "Italyyyius",
   "description": "Not bad as mad2",
   "mainImageURL": "23",
