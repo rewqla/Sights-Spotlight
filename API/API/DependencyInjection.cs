@@ -33,19 +33,26 @@ public static class DependencyInjection
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = JwtBearerDefaults.AuthenticationScheme,
                 Description = "Put Bearer [space] and then your token ",
+            };
 
-                Reference = new OpenApiReference
+            c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, jwtSecurityScheme);
+
+            var securityRequirement = new OpenApiSecurityRequirement
+            {
                 {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
-                    Type = ReferenceType.SecurityScheme
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = JwtBearerDefaults.AuthenticationScheme
+                        }
+                    },
+                    []
                 }
             };
 
-            c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                { jwtSecurityScheme, Array.Empty<string>() }
-            });
+            c.AddSecurityRequirement(securityRequirement);
         });
 
         return services;
@@ -95,9 +102,9 @@ public static class DependencyInjection
     
     private static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks()
-            .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name)
-            .AddCheck<RemoteHealthCheck>("Remote endpoints Health Check", failureStatus: HealthStatus.Unhealthy);
+        // services.AddHealthChecks()
+        //     .AddCheck<DatabaseHealthCheck>(DatabaseHealthCheck.Name)
+        //     .AddCheck<RemoteHealthCheck>("Remote endpoints Health Check", failureStatus: HealthStatus.Unhealthy);
 
         return services;
     }
