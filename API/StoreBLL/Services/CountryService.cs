@@ -37,7 +37,7 @@ namespace StoreBLL.Services
             try
             {
                 logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
-                var country = await countryRepository.GetCountryByIdWithSights(id, cancellationToken);
+                var country = await countryRepository.FindById(id, cancellationToken);
 
                 if (country == null)
                 {

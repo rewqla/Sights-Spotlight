@@ -10,7 +10,7 @@ using StoreDAL.Entities;
 
 namespace StoreDAL.Repository
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
+    public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly StoreContext _context;
         private readonly DbSet<TEntity> _dbSet;
@@ -22,12 +22,12 @@ namespace StoreDAL.Repository
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
+        public  async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
         {
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<TEntity?> FindById(int id, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity?> FindById(int id, CancellationToken cancellationToken = default)
         {
             return await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }

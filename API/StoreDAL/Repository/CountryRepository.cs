@@ -11,14 +11,25 @@ namespace StoreDAL.Repository
 
         public async Task<IEnumerable<Country>> GetAllCountriesWithSights(CancellationToken cancellationToken = default)
         {
-            return await _countryDbSet.Include(s => s.Sights).ThenInclude(sp => sp.SightPhotos)
+            return await _countryDbSet
+                .AsSplitQuery()
+                .Include(s => s.Sights)
+                .ThenInclude(sp => sp.SightPhotos)
                 .ToListAsync(cancellationToken);
         }
-
-        public async Task<Country?> GetCountryByIdWithSights(int id, CancellationToken cancellationToken = default)
+        public  async Task<Country?> GetCountryByIdWithSights(int id, CancellationToken cancellationToken = default)
         {
-            return await _countryDbSet.Include(s => s.Sights)
-                .ThenInclude(sp => sp.SightPhotos).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _countryDbSet
+                .Include(s => s.Sights)
+                .ThenInclude(sp => sp.SightPhotos)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
+        public override async Task<Country?> FindById(int id, CancellationToken cancellationToken = default)
+        {
+            return await _countryDbSet
+                .Include(s => s.Sights)
+                .ThenInclude(sp => sp.SightPhotos)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
     }
 }
