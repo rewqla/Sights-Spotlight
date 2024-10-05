@@ -34,23 +34,16 @@ namespace StoreBLL.Services
         public async Task<CountryDetailsResponse?> GetCountryDetailsById(int id,
             CancellationToken cancellationToken = default)
         {
-            try
-            {
-                logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
-                var country = await countryRepository.FindById(id, cancellationToken);
+            logger.LogInformation("Retrieving country details for ID {CountryId}.", id);
+            var country = await countryRepository.FindById(id, cancellationToken);
 
-                if (country == null)
-                {
-                    logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
-                    throw new CountryNotFoundException(id);
-                }
-
-                return CountryMappingExtensions.MapToCountryDetailsResponse(country);
-            }
-            catch (CountryNotFoundException ex)
+            if (country == null)
             {
-                return null;
+                logger.LogWarning("Country with ID {CountryId} not found in repository.", id);
+                throw new CountryNotFoundException(id);
             }
+
+            return CountryMappingExtensions.MapToCountryDetailsResponse(country);
         }
 
         public async Task<int> CreateCountry(CreateCountryRequest createCountry,

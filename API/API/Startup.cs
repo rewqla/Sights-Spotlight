@@ -54,6 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseExceptionHandler();
 
 app.UseMiddleware<ValidationMappingMiddleware>();
 app.UseMiddleware<RequestLogContextMiddleware>();

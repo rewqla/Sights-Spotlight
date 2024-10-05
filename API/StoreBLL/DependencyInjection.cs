@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StoreBLL.Handlers;
 using StoreBLL.Services;
 using StoreBLL.Interfaces;
 using StoreBLL.Validators;
@@ -15,6 +16,7 @@ public static class DependencyInjection
         return services
             .AddServices(configuration)
             .AddValidators(configuration)
+            .AddExceptionHandlers(configuration)
             .AddCaching(configuration);
     }
 
@@ -24,6 +26,16 @@ public static class DependencyInjection
             .AddScoped<ITokenService, TokenService>()
             .AddScoped<ICountryService, CountryService>()
             .AddScoped<ISightService, SightService>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddExceptionHandlers(this IServiceCollection services, IConfiguration configuration)
+    {
+        services
+            .AddExceptionHandler<BadRequestExceptionHandler>()
+            .AddExceptionHandler<NotFoundExceptionHandler>()
+            .AddProblemDetails();
         
         return services;
     }
