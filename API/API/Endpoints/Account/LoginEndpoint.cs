@@ -38,7 +38,8 @@ public static class LoginEndpoint
 
             return TypedResults.Ok(response);
         })
-            .WithName(Name);
+            .WithName(Name)
+            .WithTags("Account");;
 
         return app;
     }

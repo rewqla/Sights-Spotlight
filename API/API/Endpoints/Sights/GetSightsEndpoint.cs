@@ -25,6 +25,7 @@ public static class GetSightsEndpoint
             return TypedResults.Ok(sights);
         })
             .WithName(Name)
+            .WithTags("Sights")
             .CacheOutput("SightCache");
 
         return app;

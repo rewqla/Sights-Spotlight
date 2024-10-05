@@ -22,7 +22,8 @@ public static class GetCountriesEndpoint
 
             return TypedResults.Ok(countries);
         })
-            .WithName(Name);
+            .WithName(Name)
+            .WithTags("Country");
 
 
         return app;

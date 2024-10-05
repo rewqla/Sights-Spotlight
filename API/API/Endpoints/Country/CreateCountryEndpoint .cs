@@ -21,7 +21,8 @@ public static class CreateCountryEndpoint
             return TypedResults.CreatedAtRoute(createdCountryId, GetCountryEndpoint.Name, new { id = createdCountryId });
         })
             .WithName(Name)
-             .RequireAuthorization(PolicyRoles.Member);
+            .WithTags("Country")
+            .RequireAuthorization(PolicyRoles.Member);
 
         return app;
     }

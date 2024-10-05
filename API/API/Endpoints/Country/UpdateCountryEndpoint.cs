@@ -33,6 +33,7 @@ public static class UpdateCountryEndpoint
             return Results.NoContent();
         })
             .WithName(Name)
+            .WithTags("Country")
             .RequireAuthorization(PolicyRoles.Admin);
 
         return app;

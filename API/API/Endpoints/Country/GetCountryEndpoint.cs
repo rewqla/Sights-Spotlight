@@ -33,6 +33,7 @@ public static class GetCountryEndpoint
             return Results.Ok(country);
         })
             .WithName(Name)
+            .WithTags("Country")
             .RequireAuthorization(PolicyRoles.Admin);
 
 

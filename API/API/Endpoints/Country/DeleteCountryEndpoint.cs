@@ -30,6 +30,7 @@ public static class DeleteCountryEndpoint
             return Results.NoContent();
         })
             .WithName(Name)
+            .WithTags("Country")
             .RequireAuthorization(PolicyRoles.Admin); 
 
         return app;

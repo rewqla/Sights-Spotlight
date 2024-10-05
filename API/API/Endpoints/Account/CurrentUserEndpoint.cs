@@ -22,7 +22,7 @@ public static class CurrentUserEndpoint
 
             var token = httpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            logger.LogInformation($"Retriving current user data for {user.UserName}");
+            logger.LogInformation($"Retrieving current user data for {user.UserName}");
 
             var response= new UserResponse
             {
@@ -32,7 +32,8 @@ public static class CurrentUserEndpoint
 
             return TypedResults.Ok(response);
         })
-            .WithName(Name);
+            .WithName(Name)
+            .WithTags("Account");
 
         return app;
     }
