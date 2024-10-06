@@ -10,15 +10,15 @@ using StoreBLL.Services;
 namespace API.Endpoints.Country;
 public static class DeleteCountryEndpoint
 {
-    public const string Name = "DeleteCountry";
+    private const string Name = "DeleteCountry";
     public static IEndpointRouteBuilder MapDeleteCountry(this IEndpointRouteBuilder app)
     {
         app.MapDelete(CountryEndpoints.Delete, async (int id, ILogger<Program> logger,
-            ICountryService _countryService, CancellationToken cancellationToken) =>
+            ICountryService countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Deleting country with ID {CountryId}.", id);
 
-            var result = await _countryService.DeleteCountry(id, cancellationToken);
+            var result = await countryService.DeleteCountry(id, cancellationToken);
 
             if (!result)
             {

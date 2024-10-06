@@ -13,10 +13,10 @@ using StoreDAL.Entities;
 namespace API.Endpoints.Account;
 public static class RegisterEndpoint
 {
-    public const string Name = "Register";
+    private const string Name = "Register";
     public static IEndpointRouteBuilder MapRegister(this IEndpointRouteBuilder app)
     {
-        app.MapPost(AccountEndpoints.Register, async (RegisterRequest registerRequest, ILogger<Program> logger, UserManager<User> _userManager, ITokenService _tokenService) =>
+        app.MapPost(AccountEndpoints.Register, async (RegisterRequest registerRequest, ILogger<Program> logger, UserManager<User> userManager, ITokenService tokenService) =>
         {
             logger.LogInformation("Registering a new user: {Username}", registerRequest.Username);
 
@@ -28,7 +28,7 @@ public static class RegisterEndpoint
                 LastName = registerRequest.LastName,
             };
 
-            var result = await _userManager.CreateAsync(user, registerRequest.Password);
+            var result = await userManager.CreateAsync(user, registerRequest.Password);
 
             if (!result.Succeeded)
             {
@@ -44,16 +44,16 @@ public static class RegisterEndpoint
                 return Results.ValidationProblem(validationErrors);
             }
 
-            await _userManager.AddToRoleAsync(user, "Member");
+            await userManager.AddToRoleAsync(user, "Member");
 
-            var createdUser = await _userManager.FindByNameAsync(registerRequest.Username);
+            var createdUser = await userManager.FindByNameAsync(registerRequest.Username);
 
             logger.LogInformation($"User {registerRequest.Username} successfully registered");
 
             var response = new UserResponse
             {
                 Email = user.Email,
-                Token = await _tokenService.GenerateToken(createdUser!),
+                Token = await tokenService.GenerateToken(createdUser!),
             };
 
             return TypedResults.Ok(response);

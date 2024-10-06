@@ -13,15 +13,15 @@ using StoreDAL.Data.Migrations;
 namespace API.Endpoints.Country;
 public static class UpdateCountryEndpoint
 {
-    public const string Name = "UpdateCountry";
+    private const string Name = "UpdateCountry";
     public static IEndpointRouteBuilder MapUpdateCountry(this IEndpointRouteBuilder app)
     {
         app.MapPut(CountryEndpoints.Update, async (UpdateCountryRequest updateCountry, ILogger < Program > logger,
-            ICountryService _countryService, CancellationToken cancellationToken) =>
+            ICountryService countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Updating country with ID {CountryId}.", updateCountry.Id);
 
-            var result = await _countryService.UpdateCountry(updateCountry, cancellationToken);
+            var result = await countryService.UpdateCountry(updateCountry, cancellationToken);
 
             if (!result)
             {

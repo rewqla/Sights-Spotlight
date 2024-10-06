@@ -9,15 +9,15 @@ using StoreBLL.Services;
 namespace API.Endpoints.Country;
 public static class GetCountriesEndpoint
 {
-    public const string Name = "GetCountries";
+    private const string Name = "GetCountries";
     public static IEndpointRouteBuilder MapGetCountries(this IEndpointRouteBuilder app)
     {
         app.MapGet(CountryEndpoints.GetAll, async (ILogger<Program> logger,
-            ICountryService _countryService, CancellationToken cancellationToken) =>
+            ICountryService countryService, CancellationToken cancellationToken) =>
         {
             logger.LogInformation("Fetching all countries.");
 
-            var countries = await _countryService.GetAllCountries(cancellationToken);
+            var countries = await countryService.GetAllCountries(cancellationToken);
             logger.LogInformation("Fetched {Count} countries.", countries.Count());
 
             return TypedResults.Ok(countries);

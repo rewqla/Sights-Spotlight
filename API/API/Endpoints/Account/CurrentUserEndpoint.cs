@@ -13,12 +13,12 @@ using StoreDAL.Entities;
 namespace API.Endpoints.Account;
 public static class CurrentUserEndpoint
 {
-    public const string Name = "CurrentUser";
+    private const string Name = "CurrentUser";
     public static IEndpointRouteBuilder MapCurrentUser(this IEndpointRouteBuilder app)
     {
-        app.MapPost(AccountEndpoints.CurrentUser, async ( ILogger<Program> logger, UserManager<User> _userManager, ITokenService _tokenService, HttpContext httpContext) =>
+        app.MapPost(AccountEndpoints.CurrentUser, async ( ILogger<Program> logger, UserManager<User> userManager, ITokenService tokenService, HttpContext httpContext) =>
         {
-            var user = await _userManager.FindByNameAsync(httpContext.User.Identity.Name);
+            var user = await userManager.FindByNameAsync(httpContext.User.Identity.Name);
 
             var token = httpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
@@ -26,7 +26,7 @@ public static class CurrentUserEndpoint
 
             var response= new UserResponse
             {
-                Email = user.Email,
+                Email = user.Email!,
                 Token = token,
             };
 
