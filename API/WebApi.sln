@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreDAL", "StoreDAL\StoreD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreBLL", "StoreBLL\StoreBLL.csproj", "{C0BF11B5-CF2E-4D90-8BDF-932DD27047CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SightsSpotlight.Test", "SightsSpotlight.Test\SightsSpotlight.Test.csproj", "{98165D9D-9F9E-4D8E-8086-B1682029C3BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SightsSpotlight.Test", "SightsSpotlight.Test\SightsSpotlight.Test.csproj", "{98165D9D-9F9E-4D8E-8086-B1682029C3BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Contract", "API.Contract\API.Contract.csproj", "{F1F6B768-6F3E-41C2-89C6-923815305274}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{98165D9D-9F9E-4D8E-8086-B1682029C3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98165D9D-9F9E-4D8E-8086-B1682029C3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98165D9D-9F9E-4D8E-8086-B1682029C3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F6B768-6F3E-41C2-89C6-923815305274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F6B768-6F3E-41C2-89C6-923815305274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F6B768-6F3E-41C2-89C6-923815305274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F6B768-6F3E-41C2-89C6-923815305274}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

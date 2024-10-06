@@ -1,0 +1,3 @@
+### Health
+GET {{baseUrl}}/_health
+Content-Type: application/json

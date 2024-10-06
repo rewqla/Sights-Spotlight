@@ -6,48 +6,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StoreDAL.Entities;
 
 namespace StoreDAL.Repository
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly StoreContext _context;
         private readonly DbSet<TEntity> _dbSet;
+        private bool _disposed = false;
 
-        public GenericRepository(StoreContext context)
+        protected GenericRepository(StoreContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
         }
-        public async Task<IEnumerable<TEntity>> GetAll()
+
+        public  async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().ToListAsync();
-        }
-        public async Task<TEntity> FindById(int id)
-        {
-            return await _dbSet.FindAsync(id);
-        }
-        public async Task Add(TEntity entity)
-        {
-            await _dbSet.AddAsync(entity);
-            await _context.AddAsync(entity);
+            return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task Delete(int id)
+        public virtual async Task<TEntity?> FindById(int id, CancellationToken cancellationToken = default)
         {
-            var entity = await _dbSet.FindAsync(id);
+            return await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
 
-            if (entity != null)
+        public async Task Add(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            await _dbSet.AddAsync(entity, cancellationToken);
+        }
+
+        public void Delete(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+        }
+
+        public void Update(TEntity entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public async Task<int> Complete()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
             {
-                _dbSet.Remove(entity);
-                await _context.AddAsync(entity);
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+
+                _disposed = true;
             }
         }
 
-        public async Task Update(TEntity entity)
+        public async Task Dispose()
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            await _context.DisposeAsync();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace StoreDAL.Entities
 {
-    public class User : IdentityUser<int>
+    public sealed class User : IdentityUser<int>
     {
         public string FirstName {  get; set; }
         public string LastName {  get; set; }

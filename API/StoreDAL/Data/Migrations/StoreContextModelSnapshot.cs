@@ -125,6 +125,42 @@ namespace StoreDAL.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("StoreDAL.Entities.AuditEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("EndTimeUTC")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ErrorMessage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Metadata")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartTimeUTC")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Succeed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TrailType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditEntries");
+                });
+
             modelBuilder.Entity("StoreDAL.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -133,11 +169,14 @@ namespace StoreDAL.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Continent")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("MainImgaeURL")
+                    b.Property<string>("MainImageURL")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -201,6 +240,9 @@ namespace StoreDAL.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("YearOfFoundation")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

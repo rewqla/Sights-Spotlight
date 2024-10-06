@@ -1,0 +1,8 @@
+### Login
+POST {{baseUrl}}/api/accounts/login 
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "12345678"
+}

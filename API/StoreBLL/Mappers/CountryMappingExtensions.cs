@@ -1,0 +1,80 @@
+﻿using API.Contract.Requests;
+using API.Contract.Requests.Country;
+using API.Contract.Responses.Country;
+using StoreBLL.Exceptions;
+using StoreDAL.Entities;
+
+namespace StoreBLL.Mappers
+{
+    public static class CountryMappingExtensions
+    {
+        public static CountryResponse MapToCountryResponse(Country country)
+        {
+            return new CountryResponse
+            {
+                Id = country.Id,
+                Name = country.Name,
+                ImageURL = country.MainImageURL,
+                Continent = country.Continent.ToString(),
+            };
+        }
+        public static CountryDetailsResponse MapToCountryDetailsResponse(Country country)
+        {
+            return new CountryDetailsResponse
+            {
+                Id = country.Id,
+                Name = country.Name,
+                ImageURL = country.MainImageURL,
+                Description = country.Description,
+                Continent = country.Continent.ToString(),
+                CountrySights = country.Sights.Select(MapToCountrySightResponse).ToList()
+            };
+        }
+
+        private static CountrySightResponse MapToCountrySightResponse(Sight sight)
+        {
+            return new CountrySightResponse
+            {
+                Id = sight.Id,
+                Name = sight.Name,
+                ImageURLs = sight.SightPhotos.Select(x => x.Url).ToList(),
+                Description = sight.Description,
+            };
+        }
+
+        public static void UpdateCountryFromRequest(Country existingCountry, UpdateCountryRequest updateCountryRequest)
+        {
+            existingCountry.Name = updateCountryRequest.Name;
+            existingCountry.Description = updateCountryRequest.Description;
+            existingCountry.MainImageURL = updateCountryRequest.MainImageURL;
+            existingCountry.SecondaryImageURL = updateCountryRequest.SecondaryImageURL;
+            
+            if (!Enum.TryParse<Continent>(updateCountryRequest.Continent, true, out var continentEnum))
+            {
+                throw new CountryModificationException($"Invalid continent value: {updateCountryRequest.Continent}");
+            }
+    
+            existingCountry.Continent = continentEnum; 
+            
+            existingCountry.Sights = new List<Sight>();
+        }
+
+        public static Country MapToCountry(CreateCountryRequest createCountryRequest)
+        {
+            if (!Enum.TryParse<Continent>(createCountryRequest.Continent, true, out var continentEnum))
+            {
+                throw new CountryModificationException($"Invalid continent value: {createCountryRequest.Continent}");
+            }
+            
+            return new Country
+            {
+                Name = createCountryRequest.Name,
+                Description = createCountryRequest.Description,
+                MainImageURL = createCountryRequest.MainImageURL,
+                SecondaryImageURL = createCountryRequest.SecondaryImageURL,
+                Continent = continentEnum,
+                Sights = new List<Sight>()
+            };
+        }
+    }
+}
