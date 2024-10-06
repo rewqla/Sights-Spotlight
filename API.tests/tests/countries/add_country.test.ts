@@ -30,7 +30,7 @@ describe("POST /api/countries", () => {
     expect(response.body).toBeNumber();
   });
 
-  test("Should return 500 for invalid continent", async () => {
+  test("Should return 400 for invalid continent", async () => {
     // Arrange
     const randomCountryName = generateRandomCountryName();
     const newCountryData = {
@@ -45,7 +45,7 @@ describe("POST /api/countries", () => {
     const response = await countryService.createCountry(newCountryData, true);
 
     // Assert
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(400);
   });
 
   test("Should return 401 for creating a country without a token", async () => {

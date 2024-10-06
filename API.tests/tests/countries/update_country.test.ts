@@ -32,7 +32,7 @@ describe("PUT /api/countries/{id}", () => {
   });
 
   describe("PUT /api/countries/{id} with unknown country", () => {
-    test("Should return 500 for an unknown country ID", async () => {
+    test("Should return 404 for an unknown country ID", async () => {
       const unknownCountryId = 9999;
       const updateCountryData = {
         id: unknownCountryId,
@@ -50,7 +50,7 @@ describe("PUT /api/countries/{id}", () => {
       );
 
       // Assert
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(404);
     });
   });
 

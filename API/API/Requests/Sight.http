@@ -2,4 +2,4 @@
 GET  {{baseUrl}}/api/sights?Country=Italy&SortBy=YearOfFoundation
 
 ### Get sights with paging
-GET  {{baseUrl}}/api/sights?page=2&pageSize=6
+GET  {{baseUrl}}/api/sights?page=1&pageSize=6

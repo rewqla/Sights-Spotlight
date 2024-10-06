@@ -4,7 +4,7 @@
 GET  {{baseUrl}}/api/countries
 
 ### Get country by Id use Apikey or Admin role
-GET  {{baseUrl}}/api/countries/35
+GET  {{baseUrl}}/api/countries/3500
 Authorization: Bearer {{authToken}}
 
 ### Create a new country
@@ -21,15 +21,15 @@ Authorization:Bearer {{authToken}}
 }
 
 ### Update the country
-PUT  {{baseUrl}}/api/countries/35222
+PUT  {{baseUrl}}/api/countries/32
 Content-Type: application/json
 Authorization:Bearer {{authToken}}
 
 {
-  "id":325,
-  "name": "Italyyyius",
+  "id":32,
+  "name": "",
   "description": "Not bad as mad2",
-  "mainImageURL": "23",
+  "mainImageURL": "",
   "secondaryImageURL": "2223",
   "continent": "Australia"
 }
